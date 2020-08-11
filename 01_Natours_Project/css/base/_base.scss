@@ -1,0 +1,18 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    //= Setting up the font-size of the project
+    //! We set to 10px so we can easily convert into REM
+    font-size: 62.5%;
+}
+
+body {
+    //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
+    box-sizing: border-box;
+}

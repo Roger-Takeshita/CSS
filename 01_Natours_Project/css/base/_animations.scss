@@ -1,0 +1,46 @@
+@keyframes moveInLeft {
+    //+ Before the animation starts
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem);
+    }
+
+    //+ Middle of the animation
+    80% {
+        transform: translateX(1rem);
+    }
+
+    //+ When the animation finishes
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(10rem);
+    }
+
+    80% {
+        transform: translateX(-1rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(10rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}

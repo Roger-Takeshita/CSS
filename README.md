@@ -19,6 +19,8 @@
     -   [Sass Mixin](#sassmixin)
     -   [Sass Functions](#sassfunctions)
     -   [Sass Extend](#sassextend)
+    -   [Sass Partials](#sasspartials)
+        -   [Import Partials](#sassimportpartial)
 
 <h1 id='css'>CSS</h1>
 
@@ -989,3 +991,17 @@
 
 -   The difference between creating a **placeholder** and **mixin**
     -   We only use **placeholder** if the elements are the same
+
+<h2 id='sasspartials'>Sass Partials</h2>
+
+[Go Back to Summary](#summary)
+
+-   **Partials** are SCSS files that we split across our project
+-   We declare as `_name.scss`
+
+<h3 id='sassimportpartial'>Import Partials</h3>
+
+[Go Back to Summary](#summary)
+
+-   To import a partial we just need to use the `@import` and then specify the path to the file `@import 'base/base';`
+-   Notice that we didn't need to add `_` before base and the extension. Sass compiler understands that we want to import the `_base.scss`
