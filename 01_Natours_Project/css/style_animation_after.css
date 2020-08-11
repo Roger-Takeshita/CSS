@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #777;
+    padding: 30px;
+    background-image: linear-gradient(
+            to right bottom,
+            rgba(111, 164, 213, 0.3),
+            rgba(40, 66, 180, 0.3)
+        ),
+        url('../img/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+.text-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 95vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading-primary {
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+
+    /*! Fix to Transform Bug */
+    backface-visibility: hidden;
+}
+
+.main {
+    display: block;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 21px;
+    text-align: center;
+
+    /*! Adding Animation - Advanced Way */
+    animation: moveInLeft 1s ease-in-out;
+}
+
+.sub {
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 13px;
+    text-align: center;
+
+    /*! Adding Animation - Advanced Way */
+    animation: moveInRight 1s ease-in-out;
+}
+
+.btn:link,
+.btn:visited {
+    text-transform: uppercase;
+    background-color: white;
+    padding: 15px 40px;
+    border-radius: 100px;
+    text-decoration: none;
+    display: inline-block;
+
+    /*_ Enabling Animation - Easy Way*/
+    transition: all 0.2s;
+    position: relative;
+
+    /*! Adding Animation After Applying Styling to Animation and Adding a Delay - Advanced Way */
+    animation: moveInBottom 0.5s ease-out 0.75s;
+    animation-fill-mode: backwards;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/*! Adding Animation After Hovering */
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/*= Adds pseudo element right after the original element */
+.btn::after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+
+    /*! Positioning pseudo element behind the original element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    /*_ Enabling Animation - Easy Way*/
+    /*+ Enabling animation so we can use with :hover::after */
+    transition: all 0.4s;
+}
+
+.btn-white {
+    background-color: white;
+    color: #777;
+}
+
+.btn-white::after {
+    /*! Styling the pseudo element  */
+    background-color: white;
+}
+
+/*= Advanced Animation  */
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    80% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0p);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    80% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
