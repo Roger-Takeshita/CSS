@@ -8,9 +8,12 @@
         -   [Positioning](#positioning)
             -   [Centering Element](#centeringelement)
         -   [Span Element](#spanelement)
+        -   [Converting Pixel to REM](#convertingpxtorem)
+        -   [Good Practice - Reseting the Project](#goodpractice)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
+    -   [BEM (Block Element Modifier) Methodology](#bem)
 
 <h1 id='css'>CSS</h1>
 
@@ -174,6 +177,70 @@
                   }
               }
           }
+      }
+    ```
+
+<h3 id='convertingpxtorem'>Converting Pixel to REM</h3>
+
+[Go Back to Summary](#summary)
+
+-   If we have set our `html` to `font-size: 16px` this means that `1rem` is equal to `16px`
+-   So we can convert `rem` using the **rule of three**
+
+    |  px  |    rem     |
+    | :--: | :--------: |
+    | 15px | 0.9375 rem |
+    | 16px |   1 rem    |
+    | 17px | 1.0625 rem |
+
+<h3 id='goodpractice'>Good Practice - Reseting the Project</h3>
+
+[Go Back to Summary](#summary)
+
+-   a good practice instead of just selecting the all elements (`*`), we can select the `::before` and `::after` pseudo elements, and define the reset parameters
+
+    ```SCSS
+      *,
+      *::before,
+      *::after {
+          margin: 0;
+          padding: 0;
+          box-sizing: inherit;
+      }
+    ```
+
+    -   and then inside of the `body` element, we define the `box-sizing` to `border-box`
+
+    ```SCSS
+      body {
+          font-family: 'Lato', sans-serif;
+          font-weight: 400;
+          font-size: 0.16rem;
+          line-height: 1.7;
+          color: #777;
+          padding: 3rem;
+
+          //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
+          box-sizing: border-box;
+      }
+    ```
+
+-   another good practice is to define the default `font-size` of the project
+
+    -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
+
+    ```SCSS
+      html {
+          font-size: 10px;
+      }
+    ```
+
+    -   We could also use in **%**, we just have to convert the `10px`.
+    -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
+
+    ```SCSS
+      html {
+          font-size: 62.5%;
       }
     ```
 
@@ -453,6 +520,211 @@
               left: 0;
               z-index: -1;
               transition: all 0.4s;
+          }
+      }
+    ```
+
+<h1 id='bem'>BEM (Block Element Modifier) Methodology</h1>
+
+[Go Back to Summary](#summary)
+
+-   Converting our existing project into BEM Methodology
+-   in `index.html`:
+
+    ```HTML
+      <!DOCTYPE html>
+      <html lang="en">
+
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+          <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+
+          <link rel="stylesheet" href="css/icon-font.css">
+          <link rel="stylesheet" href="css/style.css">
+          <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+          <title>Natours | Exciting tours for adventurous people</title>
+      </head>
+
+      <body>
+          <header class="header">
+              <div class="header__logo-box">
+                  <img class="header__logo" src="./img/logo-white.png" alt="logo">
+              </div>
+              <div class="header__text-box">
+                  <h1 class="heading-primary">
+                      <span class="heading-primary__main">Outdoors</span>
+                      <span class="heading-primary__sub">is where life happens</span>
+                  </h1>
+                  <a href="#" class="btn btn--white btn--animated">Discover our tours</a>
+              </div>
+          </header>
+      </body>
+
+      </html>
+    ```
+
+-   in `style.scss`:
+
+    ```SCSS
+      *,
+      *::before,
+      *::after {
+          margin: 0;
+          padding: 0;
+          box-sizing: inherit;
+      }
+
+      html {
+          font-size: 62.5%;
+      }
+
+      body {
+          font-family: 'Lato', sans-serif;
+          font-weight: 400;
+          font-size: 0.16rem;
+          line-height: 1.7;
+          color: #777;
+          padding: 3rem;
+          box-sizing: border-box;
+      }
+
+      .header {
+          height: 95vh;
+          background-image: linear-gradient(
+                  to right bottom,
+                  rgba(126, 213, 111, 0.8),
+                  rgba(40, 180, 131, 0.8)
+              ),
+              url('../img/hero.jpg');
+          background-size: cover;
+          background-position: top;
+          clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+          position: relative;
+          &__logo-box {
+              position: absolute;
+              top: 4rem;
+              left: 4rem;
+          }
+          &__logo {
+              height: 3.5rem;
+          }
+          &__text-box {
+              position: absolute;
+              top: 40%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+          }
+      }
+
+      .heading-primary {
+          color: white;
+          text-transform: uppercase;
+          margin-bottom: 6rem;
+          backface-visibility: hidden;
+          &__main {
+              display: block;
+              font-size: 6rem;
+              font-weight: 400;
+              letter-spacing: 3.5rem;
+              animation-name: moveInLeft;
+              animation-duration: 1s;
+              animation-timing-function: ease-in-out;
+          }
+          &__sub {
+              display: block;
+              font-size: 2rem;
+              font-weight: 700;
+              letter-spacing: 1.75rem;
+              animation: moveInRight 1s ease-in-out;
+          }
+      }
+
+      .btn {
+          text-transform: uppercase;
+          text-decoration: none;
+          display: inline-block;
+          border-radius: 10rem;
+          font-size: 1.6rem;
+          transition: all 0.2s;
+          position: relative;
+          &--white {
+              background-color: white;
+              color: #777;
+              padding: 1.5rem 4rem;
+              &::after {
+                  background-color: white;
+              }
+          }
+          &--animated {
+              animation: moveInBottom 0.5s ease-out 0.75s;
+              animation-fill-mode: backwards;
+          }
+          &:hover {
+              transform: translateY(-0.3rem);
+              box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+              &::after {
+                  transform: scaleX(1.4) scaleY(1.6);
+                  opacity: 0;
+              }
+          }
+          &:active {
+              transform: translateY(-0.1rem);
+              box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+          }
+          &::after {
+              content: '';
+              display: inline-block;
+              height: 100%;
+              width: 100%;
+              border-radius: 10rem;
+              position: absolute;
+              top: 0;
+              left: 0;
+              z-index: -1;
+              transition: all 0.4s;
+          }
+      }
+
+      @keyframes moveInLeft {
+          0% {
+              opacity: 0;
+              transform: translateX(-10rem);
+          }
+          80% {
+              transform: translateX(1rem);
+          }
+          100% {
+              opacity: 1;
+              transform: translate(0);
+          }
+      }
+
+      @keyframes moveInRight {
+          0% {
+              opacity: 0;
+              transform: translateX(10rem);
+          }
+          80% {
+              transform: translateX(-1rem);
+          }
+          100% {
+              opacity: 1;
+              transform: translate(0);
+          }
+      }
+
+      @keyframes moveInBottom {
+          0% {
+              opacity: 0;
+              transform: translateY(10rem);
+          }
+          100% {
+              opacity: 1;
+              transform: translate(0);
           }
       }
     ```

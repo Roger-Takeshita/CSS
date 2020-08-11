@@ -7,23 +7,32 @@ Dark green: #28b485
 
 */
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
+    box-sizing: inherit;
+}
 
-    //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
-    box-sizing: border-box;
+html {
+    //= Setting up the font-size of the project
+    //! We set to 10px so we can easily convert into REM
+    font-size: 62.5%;
 }
 
 body {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 0.16rem;
 
     //- 1.7 times bigger than the font height
     line-height: 1.7;
     color: #777;
-    padding: 30px;
+    padding: 3rem;
+
+    //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
+    box-sizing: border-box;
 }
 
 .header {
@@ -49,11 +58,11 @@ body {
 
     &__logo-box {
         position: absolute;
-        top: 40px;
-        left: 40px;
-        &__logo {
-            height: 35px;
-        }
+        top: 4rem;
+        left: 4rem;
+    }
+    &__logo {
+        height: 3.5rem;
     }
     &__text-box {
         position: absolute;
@@ -61,86 +70,88 @@ body {
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
-        &__heading-primary {
-            color: white;
-            text-transform: uppercase;
-            margin-bottom: 60px;
+    }
+}
 
-            //! Animation - a hack to fix shaking transform
-            backface-visibility: hidden;
-            &__main {
-                display: block;
-                font-size: 60px;
-                font-weight: 400;
-                letter-spacing: 35px;
+.heading-primary {
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 6rem;
 
-                //! Calling the animation
-                animation-name: moveInLeft;
-                animation-duration: 1s;
-                // animation-delay: 3s;
-                // animation-iteration-count: 3;
-                animation-timing-function: ease-in-out;
-            }
-            &__sub {
-                display: block;
-                font-size: 20px;
-                font-weight: 700;
-                letter-spacing: 17.4px;
+    //! Animation - a hack to fix shaking transform
+    backface-visibility: hidden;
+    &__main {
+        display: block;
+        font-size: 6rem;
+        font-weight: 400;
+        letter-spacing: 3.5rem;
 
-                //! Calling the animation - shorthand
-                animation: moveInRight 1s ease-in-out;
-            }
+        //! Calling the animation
+        animation-name: moveInLeft;
+        animation-duration: 1s;
+        // animation-delay: 3s;
+        // animation-iteration-count: 3;
+        animation-timing-function: ease-in-out;
+    }
+    &__sub {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1.75rem;
+
+        //! Calling the animation - shorthand
+        animation: moveInRight 1s ease-in-out;
+    }
+}
+
+.btn {
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10rem;
+    font-size: 1.6rem;
+
+    //_ EASIEST - TRANSFORM
+    transition: all 0.2s;
+    position: relative;
+    &--white {
+        background-color: white;
+        color: #777;
+        padding: 1.5rem 4rem;
+        &::after {
+            background-color: white;
         }
-        &__btn {
-            text-transform: uppercase;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 100px;
+    }
+    &--animated {
+        //- Type of animation, duration, mode, delay
+        animation: moveInBottom 0.5s ease-out 0.75s;
 
-            //_ EASIEST - TRANSFORM
-            transition: all 0.2s;
-            position: relative;
-
-            //- Type of animation, duration, mode, delay
-            animation: moveInBottom 0.5s ease-out 0.75s;
-
-            //- The animation-fill-mode applies the animation styles before the animation starts
-            animation-fill-mode: backwards;
-
-            &--white {
-                @extend .header__text-box__btn;
-                background-color: white;
-                color: #777;
-                padding: 15px 40px;
-                &::after {
-                    background-color: white;
-                }
-            }
-            &:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-                &::after {
-                    transform: scaleX(1.4) scaleY(1.6);
-                    opacity: 0;
-                }
-            }
-            &:active {
-                transform: translateY(-1px);
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            }
-            &::after {
-                content: '';
-                display: inline-block;
-                height: 100%;
-                width: 100%;
-                border-radius: 100px;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                transition: all 0.4s;
-            }
+        //- The animation-fill-mode applies the animation styles before the animation starts
+        animation-fill-mode: backwards;
+    }
+    &:hover {
+        transform: translateY(-0.3rem);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+        &::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
         }
+    }
+    &:active {
+        transform: translateY(-0.1rem);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    }
+    &::after {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.4s;
     }
 }
 
@@ -149,12 +160,12 @@ body {
     //+ Before the animation starts
     0% {
         opacity: 0;
-        transform: translateX(-100px);
+        transform: translateX(-10rem);
     }
 
     //+ Middle of the animation
     80% {
-        transform: translateX(10px);
+        transform: translateX(1rem);
     }
 
     //+ When the animation finishes
@@ -167,11 +178,11 @@ body {
 @keyframes moveInRight {
     0% {
         opacity: 0;
-        transform: translateX(100px);
+        transform: translateX(10rem);
     }
 
     80% {
-        transform: translateX(-10px);
+        transform: translateX(-1rem);
     }
 
     100% {
@@ -183,7 +194,7 @@ body {
 @keyframes moveInBottom {
     0% {
         opacity: 0;
-        transform: translateY(100px);
+        transform: translateY(10rem);
     }
 
     100% {

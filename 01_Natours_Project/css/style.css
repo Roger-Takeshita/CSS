@@ -6,20 +6,28 @@ Medium green: #55c57a
 Dark green: #28b485
 
 */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 body {
   font-family: 'Lato', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 0.16rem;
   line-height: 1.7;
   color: #777;
-  padding: 30px;
+  padding: 3rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .header {
@@ -35,12 +43,12 @@ body {
 
 .header__logo-box {
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 4rem;
+  left: 4rem;
 }
 
-.header__logo-box__logo {
-  height: 35px;
+.header__logo {
+  height: 3.5rem;
 }
 
 .header__text-box {
@@ -52,19 +60,19 @@ body {
   text-align: center;
 }
 
-.header__text-box__heading-primary {
+.heading-primary {
   color: white;
   text-transform: uppercase;
-  margin-bottom: 60px;
+  margin-bottom: 6rem;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
 }
 
-.header__text-box__heading-primary__main {
+.heading-primary__main {
   display: block;
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 400;
-  letter-spacing: 35px;
+  letter-spacing: 3.5rem;
   -webkit-animation-name: moveInLeft;
           animation-name: moveInLeft;
   -webkit-animation-duration: 1s;
@@ -73,65 +81,69 @@ body {
           animation-timing-function: ease-in-out;
 }
 
-.header__text-box__heading-primary__sub {
+.heading-primary__sub {
   display: block;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: 17.4px;
+  letter-spacing: 1.75rem;
   -webkit-animation: moveInRight 1s ease-in-out;
           animation: moveInRight 1s ease-in-out;
 }
 
-.header__text-box__btn, .header__text-box__btn--white {
+.btn {
   text-transform: uppercase;
   text-decoration: none;
   display: inline-block;
-  border-radius: 100px;
+  border-radius: 10rem;
+  font-size: 1.6rem;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   position: relative;
+}
+
+.btn--white {
+  background-color: white;
+  color: #777;
+  padding: 1.5rem 4rem;
+}
+
+.btn--white::after {
+  background-color: white;
+}
+
+.btn--animated {
   -webkit-animation: moveInBottom 0.5s ease-out 0.75s;
           animation: moveInBottom 0.5s ease-out 0.75s;
   -webkit-animation-fill-mode: backwards;
           animation-fill-mode: backwards;
 }
 
-.header__text-box__btn--white {
-  background-color: white;
-  color: #777;
-  padding: 15px 40px;
+.btn:hover {
+  -webkit-transform: translateY(-0.3rem);
+          transform: translateY(-0.3rem);
+  -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
 }
 
-.header__text-box__btn--white::after {
-  background-color: white;
-}
-
-.header__text-box__btn:hover, .header__text-box__btn--white:hover {
-  -webkit-transform: translateY(-3px);
-          transform: translateY(-3px);
-  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.header__text-box__btn:hover::after, .header__text-box__btn--white:hover::after {
+.btn:hover::after {
   -webkit-transform: scaleX(1.4) scaleY(1.6);
           transform: scaleX(1.4) scaleY(1.6);
   opacity: 0;
 }
 
-.header__text-box__btn:active, .header__text-box__btn--white:active {
-  -webkit-transform: translateY(-1px);
-          transform: translateY(-1px);
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+.btn:active {
+  -webkit-transform: translateY(-0.1rem);
+          transform: translateY(-0.1rem);
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
-.header__text-box__btn::after, .header__text-box__btn--white::after {
+.btn::after {
   content: '';
   display: inline-block;
   height: 100%;
   width: 100%;
-  border-radius: 100px;
+  border-radius: 10rem;
   position: absolute;
   top: 0;
   left: 0;
@@ -143,12 +155,12 @@ body {
 @-webkit-keyframes moveInLeft {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(-100px);
-            transform: translateX(-100px);
+    -webkit-transform: translateX(-10rem);
+            transform: translateX(-10rem);
   }
   80% {
-    -webkit-transform: translateX(10px);
-            transform: translateX(10px);
+    -webkit-transform: translateX(1rem);
+            transform: translateX(1rem);
   }
   100% {
     opacity: 1;
@@ -160,12 +172,12 @@ body {
 @keyframes moveInLeft {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(-100px);
-            transform: translateX(-100px);
+    -webkit-transform: translateX(-10rem);
+            transform: translateX(-10rem);
   }
   80% {
-    -webkit-transform: translateX(10px);
-            transform: translateX(10px);
+    -webkit-transform: translateX(1rem);
+            transform: translateX(1rem);
   }
   100% {
     opacity: 1;
@@ -177,12 +189,12 @@ body {
 @-webkit-keyframes moveInRight {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(100px);
-            transform: translateX(100px);
+    -webkit-transform: translateX(10rem);
+            transform: translateX(10rem);
   }
   80% {
-    -webkit-transform: translateX(-10px);
-            transform: translateX(-10px);
+    -webkit-transform: translateX(-1rem);
+            transform: translateX(-1rem);
   }
   100% {
     opacity: 1;
@@ -194,12 +206,12 @@ body {
 @keyframes moveInRight {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(100px);
-            transform: translateX(100px);
+    -webkit-transform: translateX(10rem);
+            transform: translateX(10rem);
   }
   80% {
-    -webkit-transform: translateX(-10px);
-            transform: translateX(-10px);
+    -webkit-transform: translateX(-1rem);
+            transform: translateX(-1rem);
   }
   100% {
     opacity: 1;
@@ -211,8 +223,8 @@ body {
 @-webkit-keyframes moveInBottom {
   0% {
     opacity: 0;
-    -webkit-transform: translateY(100px);
-            transform: translateY(100px);
+    -webkit-transform: translateY(10rem);
+            transform: translateY(10rem);
   }
   100% {
     opacity: 1;
@@ -224,8 +236,8 @@ body {
 @keyframes moveInBottom {
   0% {
     opacity: 0;
-    -webkit-transform: translateY(100px);
-            transform: translateY(100px);
+    -webkit-transform: translateY(10rem);
+            transform: translateY(10rem);
   }
   100% {
     opacity: 1;
