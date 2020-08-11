@@ -10,6 +10,7 @@
         -   [Span Element](#spanelement)
         -   [Converting Pixel to REM](#convertingpxtorem)
         -   [Good Practice - Reseting the Project](#goodpractice)
+        -   [Selecting CSS Attributes](#selectingattributes)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -248,6 +249,146 @@
     ```SCSS
       html {
           font-size: 62.5%;
+      }
+    ```
+
+<h3 id='selectingattributes'>Selecting CSS Attributes</h3>
+
+[Go Back to Summary](#summary)
+
+-   Instead of creating a class so select a specific element(s)
+-   we can select using `[class^="col-"]`
+
+    -   Where `class` is the they of attribute that we are targeting
+    -   `^=` select classes that starts with
+        -   `*=` select classes that contains anything equals
+        -   `$=` select classes that ends with
+    -   `"col-"` the name of the variable
+
+-   another cool command is the **negation** (`:not()`)
+
+    ```SCSS
+      &:not(:last-child) {
+          margin-bottom: $gap-vertical;
+      }
+    ```
+
+-   in `index.html`
+
+    ```HTML
+      <!DOCTYPE html>
+      <html lang="en">
+
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+          <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+
+          <link rel="stylesheet" href="css/icon-font.css">
+          <link rel="stylesheet" href="css/style.css">
+          <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+          <title>Custom Grid With Floats</title>
+      </head>
+
+      <body>
+          <section class="grid-test">
+              <div class="grid-test__row">
+                  <div class="col-1-of-2">Col 1 of 2</div>
+                  <div class="col-1-of-2">Col 1 of 2</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-3">Col 1 of 3</div>
+                  <div class="col-1-of-3">Col 1 of 3</div>
+                  <div class="col-1-of-3">Col 1 of 3</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-3">Col 1 of 3</div>
+                  <div class="col-2-of-3">Col 2 of 3</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-2-of-4">Col 2 of 4</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-3-of-4">Col 3 of 4</div>
+              </div>
+          </section>
+      </body>
+
+      </html>
+    ```
+
+-   in `style.scss`
+
+    ```SCSS
+      .grid-test {
+          &__row {
+              max-width: $grid-width;
+              background-color: #eee;
+              margin: 0 auto;
+
+              &:not(:last-child) {
+                  margin-bottom: $gap-vertical;
+              }
+
+              @include clearfix;
+
+              [class^='col-'] {
+                  background-color: orangered;
+                  float: left;
+                  text-align: center;
+                  color: $color-white;
+                  height: 5rem;
+                  font-size: 2rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
+                  &:not(:last-child) {
+                      margin-right: $gap-horizontal;
+                  }
+              }
+
+              .col-1-of-2 {
+                  width: calc((100% - #{$gap-horizontal}) / 2);
+              }
+
+              .col-1-of-3 {
+                  width: calc((100% - 2 * #{$gap-horizontal}) / 3);
+              }
+
+              .col-2-of-3 {
+                  width: calc(
+                      (2 * ((100% - 2 * #{$gap-horizontal})) / 3) + #{$gap-horizontal}
+                  );
+              }
+
+              .col-1-of-4 {
+                  width: calc((100% - 3 * #{$gap-horizontal}) / 4);
+              }
+
+              .col-2-of-4 {
+                  width: calc(
+                      (2 * ((100% - 3 * #{$gap-horizontal})) / 4) + #{$gap-horizontal}
+                  );
+              }
+
+              .col-3-of-4 {
+                  width: calc(
+                      (3 * ((100% - 3 * #{$gap-horizontal})) / 4) + 2 * #{$gap-horizontal}
+                  );
+              }
+          }
       }
     ```
 
