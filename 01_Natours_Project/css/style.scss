@@ -1,11 +1,8 @@
-/*
-COLORS:
-
-Light green: #7ed56f
-Medium green: #55c57a
-Dark green: #28b485
-
-*/
+$color-primary: #7ed56f;
+$color-primary-light: #55c57a;
+$color-primary-dark: #28b485;
+$color-grey-dark: #777;
+$color-white: #fff;
 
 *,
 *::before,
@@ -28,7 +25,7 @@ body {
 
     //- 1.7 times bigger than the font height
     line-height: 1.7;
-    color: #777;
+    color: $color-grey-dark;
     padding: 3rem;
 
     //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
@@ -41,8 +38,8 @@ body {
     //- add gradient to the image 'linear-gradient(direction, from-color, to-color)', we first specify the gradient first then the url()
     background-image: linear-gradient(
             to right bottom,
-            rgba(126, 213, 111, 0.8),
-            rgba(40, 180, 131, 0.8)
+            rgba($color-primary-light, 0.8),
+            rgba($color-primary-dark, 0.8)
         ),
         url('../img/hero.jpg');
 
@@ -74,7 +71,7 @@ body {
 }
 
 .heading-primary {
-    color: white;
+    color: $color-white;
     text-transform: uppercase;
     margin-bottom: 6rem;
 
@@ -115,11 +112,11 @@ body {
     transition: all 0.2s;
     position: relative;
     &--white {
-        background-color: white;
-        color: #777;
+        background-color: $color-white;
+        color: $color-grey-dark;
         padding: 1.5rem 4rem;
         &::after {
-            background-color: white;
+            background-color: $color-white;
         }
     }
     &--animated {

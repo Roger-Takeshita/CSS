@@ -1,11 +1,3 @@
-/*
-COLORS:
-
-Light green: #7ed56f
-Medium green: #55c57a
-Dark green: #28b485
-
-*/
 *,
 *::before,
 *::after {
@@ -32,8 +24,8 @@ body {
 
 .header {
   height: 95vh;
-  background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(126, 213, 111, 0.8)), to(rgba(40, 180, 131, 0.8))), url("../img/hero.jpg");
-  background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 131, 0.8)), url("../img/hero.jpg");
+  background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(85, 197, 122, 0.8)), to(rgba(40, 180, 133, 0.8))), url("../img/hero.jpg");
+  background-image: linear-gradient(to right bottom, rgba(85, 197, 122, 0.8), rgba(40, 180, 133, 0.8)), url("../img/hero.jpg");
   background-size: cover;
   background-position: top;
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
@@ -61,7 +53,7 @@ body {
 }
 
 .heading-primary {
-  color: white;
+  color: #fff;
   text-transform: uppercase;
   margin-bottom: 6rem;
   -webkit-backface-visibility: hidden;
@@ -102,13 +94,13 @@ body {
 }
 
 .btn--white {
-  background-color: white;
+  background-color: #fff;
   color: #777;
   padding: 1.5rem 4rem;
 }
 
 .btn--white::after {
-  background-color: white;
+  background-color: #fff;
 }
 
 .btn--animated {

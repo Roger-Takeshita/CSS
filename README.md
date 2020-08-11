@@ -13,7 +13,12 @@
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
-    -   [BEM (Block Element Modifier) Methodology](#bem)
+-   [BEM (Block Element Modifier) Methodology](#bem)
+-   [Sass](#sass)
+    -   [Sass Variables and Nesting](#sassvariables)
+    -   [Sass Mixin](#sassmixin)
+    -   [Sass Functions](#sassfunctions)
+    -   [Sass Extend](#sassextend)
 
 <h1 id='css'>CSS</h1>
 
@@ -728,3 +733,259 @@
           }
       }
     ```
+
+<h1 id='sass'>Sass</h1>
+
+[Go Back to Summary](#summary)
+
+-   With **Sass** we have:
+    -   **Variables**: for reusable values such as colors, font-sizes, spacing, etc.
+    -   **Nesting**: to nest selectors inside one of another, allowing us to write less code;
+    -   **Operators**: for mathematical operations right inside of CSS
+    -   **Partials and Imports**: to write CSS in different files and importing them all into one single file
+    -   **Mixins**: to write reusable pieces of CSS code
+    -   **Functions**: similar to mixins, with the difference that they produce a value that can be used
+    -   **Extends**: to make different selectors inherit declarations that are common to all of them
+    -   **Control Directives**: for writing complex code using conditionals and loops
+
+<h2 id='sassvariables'>Sass Variables and Nesting</h2>
+
+[Go Back to Summary](#summary)
+
+-   [Final Page Link](https://codepen.io/roger-takeshita/pen/zYqvRXw?editors=1100)
+-   Creating variables
+
+    ```SCSS
+      $color-primary: #f9ed69;
+      $color-secondary: #f08a5d;
+      $color-teritiary: #b83b5e;
+      $color-text-dark: #333;
+      $color-text-light: #eee;
+      $width-button: 150px;
+    ```
+
+-   Built-in functions
+
+    -   `darken($color-secondary, 15%)`
+    -   `lighten($color-tertiary, 10%)`
+
+        ```HTML
+          <nav>
+              <ul class="navigation">
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#">Pricing</a></li>
+                  <li><a href="#">Contact</a></li>
+              </ul>
+              <div class="btn">
+                  <a href="#" class="btn__main">Sign Up</a>
+                  <a href="#" class="btn__hot">Get a Quote</a>
+              </div>
+          </nav>
+        ```
+
+        ```SCSS
+          $color-primary: #f9ed69;
+          $color-secondary: #f08a5d;
+          $color-tertiary: #b83b5e;
+          $color-text-dark: #333;
+          $color-text-light: #eee;
+          $width-button: 150px;
+
+          *,
+          *::before,
+          *::after {
+              margin: 0;
+              padding: 0;
+              box-sizing: inherit;
+          }
+
+          html {
+              font-size: 62,5%;
+          }
+
+          body {
+              box-sizing: border-box;
+          }
+
+          nav {
+              margin: 3rem;
+              background-color: $color-primary;
+
+              &::after {
+                  content: '';
+                  clear: both;
+                  display: table;
+              }
+          }
+
+          .navigation {
+              list-style: none;
+              float: left;
+
+              li {
+                  display: inline-block;
+                  margin-left: 3rem;
+
+                  &:first-child {
+                      margin: 0;
+                  }
+
+                  a {
+                      text-decoration: none;
+                      text-transform: uppercase;
+                      color: $color-text-dark;
+                  }
+              }
+          }
+
+          .btn {
+              float: right;
+
+              &__main, &__hot {
+                  padding: 1rem;
+                  display: inline-block;
+                  text-align: center;
+                  border-radius: 10rem;
+                  text-decoration: none;
+                  text-transform: uppercase;
+                  width: $width-button;
+                  background-color: $color-secondary;
+                  color: $color-text-light;
+
+                  &:hover {
+                      background-color: darken($color-secondary, 15%);
+                  }
+              }
+          }
+        ```
+
+<h2 id='sassmixin'>Sass Mixin</h2>
+
+[Go Back to Summary](#summary)
+
+```SCSS
+  $color-primary: #f9ed69;
+  $color-secondary: #f08a5d;
+  $color-tertiary: #b83b5e;
+  $color-text-dark: #333;
+  $color-text-light: #eee;
+  $width-button: 150px;
+
+  @mixin clearfix {
+      &::after {
+          content: '';
+          clear: both;
+          display: table;
+      }
+  }
+
+  @mixin style-text-light ($color) {
+      text-decoration: none;
+      text-transform: uppercase;
+      color: $color;
+  }
+
+  ...
+
+  nav {
+      margin: 3rem;
+      background-color: $color-primary;
+      @include clearfix;
+  }
+
+  .navigation {
+      list-style: none;
+      float: left;
+
+      li {
+          display: inline-block;
+          margin-left: 3rem;
+
+          &:first-child {
+              margin: 0;
+          }
+
+          a {
+              @include style-text-light ($color-text-dark);
+          }
+      }
+  }
+
+  .btn {
+      float: right;
+
+      &__main, &__hot {
+          padding: 1rem;
+          display: inline-block;
+          text-align: center;
+          border-radius: 10rem;
+          width: $width-button;
+          background-color: $color-secondary;
+          @include style-text-light ($color-text-light);
+
+          &:hover {
+              background-color: darken($color-secondary, 15%);
+          }
+      }
+  }
+```
+
+<h2 id='sassfunctions'>Sass Functions</h2>
+
+[Go Back to Summary](#summary)
+
+-   Functions are like `mixin`, the only difference is that **functions return something**
+
+    ```SCSS
+      @function divide ($arg1, $arg2) {
+          @return $arg1/$arg2;
+      }
+    ```
+
+-   And to use it, we just have to call it, the operation in this case returns a number, then we have to multiply by the unit in `rem/px`
+
+    ```SCSS
+      nav {
+          margin: divide(60, 20) * 1rem;
+          background-color: $color-primary;
+          @include clearfix;
+      }
+    ```
+
+<h2 id='sassextend'>Sass Extend</h2>
+
+[Go Back to Summary](#summary)
+
+-   `@extend` basically we can extend/inherit any style from any element
+-   We can create a **placeholder** to hold certain styles
+
+    ```SCSS
+      %btn-palcehodler {
+          padding: 1rem;
+          display: inline-block;
+          text-align: center;
+          border-radius: 10rem;
+          width: $width-button;
+          background-color: $color-secondary;
+          @include style-text-light ($color-text-light);
+      }
+    ```
+
+-   And the just `@extend` to the element
+
+    ```SCSS
+      .btn {
+          float: right;
+
+          &__main, &__hot {
+              @extend %btn-palcehodler;
+
+              &:hover {
+                  background-color: darken($color-secondary, 15%);
+              }
+          }
+      }
+    ```
+
+-   The difference between creating a **placeholder** and **mixin**
+    -   We only use **placeholder** if the elements are the same
