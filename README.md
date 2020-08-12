@@ -5,11 +5,13 @@
         -   [Reset Project](#resetproject)
         -   [Body Element](#body)
         -   [Adding Background Image](#addingbgimage)
+            -   [clip-path: polygon()](#clipathpolygon)
+            -   [Alternative to clip-path](#alternativetoclippath)
         -   [Positioning](#positioning)
-            -   [Centering Element](#centeringelement)
+            -   [Centering Element - Absolute Position](#centeringelement)
         -   [Span Element](#spanelement)
         -   [Converting Pixel to REM](#convertingpxtorem)
-        -   [Good Practice - Reseting the Project](#goodpractice)
+        -   [Good Practice - Reset the Project](#goodpractice)
         -   [Selecting CSS Attributes](#selectingattributes)
         -   [-webkit-background-clip - Background Text Styling](#webkitbackgroundclip)
         -   [Advanced Hover](#advancedhover)
@@ -79,8 +81,45 @@
         -   We can specify more than one direction, such as `to right bottom`
     -   `background-size: cover;` tries to fit the image inside the box to use the whole available width. If we change the **viewport** the image will be resized until the height hits e available height of the element
     -   `background-position: top;` ensures that the top of the image is always visible, and the bottom is cropped if bigger the than the available space
-    -   `clip-path: polygon(x y, x y, x y, x y)` displays only the defined area of the image
-        -   [clip-path maker - Website](https://bennettfeely.com/clippy/)
+
+    ```SCSS
+      .header {
+          height: 95vh;
+          background-image: linear-gradient(
+                  to right bottom,
+                  rgba($color-primary-light, 0.8),
+                  rgba($color-primary-dark, 0.8)
+              ),
+              url('../img/hero.jpg');
+          background-size: cover;
+          background-position: top;
+      }
+    ```
+
+<h4 id='clipathpolygon'>clip-path: polygon()</h4>
+
+-   `clip-path: polygon(x y, x y, x y, x y)` displays only the defined area of the image
+
+    -   [clip-path maker - Website](https://bennettfeely.com/clippy/)
+
+    ```SCSS
+      .header {
+          clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+      }
+    ```
+
+<h4 id='alternativetoclippath'>Alternative to clip-path</h4>
+
+-   An alternative to clip path, if we want to just **skew** the image by **-7 degrees**
+    -   `transform: skewY(-7deg);`
+-   The only problem is all the nested elements will be skewed by **-7 degrees**
+-   One easy and better way to fix this, is to **select all direct child of an element** and skew back **7 degrees**
+
+    ```SCSS
+      & > * {
+          transform: skewY(7deg);
+      }
+    ```
 
 <h3 id='positioning'>Positioning</h3>
 
@@ -106,32 +145,41 @@
     ```SCSS
       .header {
           height: 95vh;
-          background-image: linear-gradient(
-                  to right bottom,
-                  rgba(126, 213, 111, 0.8),
-                  rgba(40, 180, 131, 0.8)
-              ),
-              url('../img/hero.jpg');
-          background-size: cover;
-          background-position: top;
-          clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
           position: relative;
 
           &__logo-box {
               position: absolute;
-              top: 40px;
-              left: 40px;
-              &__logo {
-                  height: 35px;
-              }
+              top: 4rem;
+              left: 4rem;
+          }
+          &__text-box {
+              position: absolute;
+              top: 40%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
           }
       }
     ```
 
-<h4 id='centeringelement'>Centering Element</h4>
+<h4 id='centeringelement'>Centering Element - Absolute Position</h4>
 
 -   To center an element in the middle of the screen, one option is to use the **absolute** position
--
+
+    ```SCSS
+      .header {
+          height: 95vh;
+          position: relative;
+
+          &__text-box {
+              position: absolute;
+              top: 40%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+          }
+      }
+    ```
 
 <h3 id='spanelement'>Span Element</h3>
 
@@ -207,7 +255,7 @@
     | 16px |   1 rem    |
     | 17px | 1.0625 rem |
 
-<h3 id='goodpractice'>Good Practice - Reseting the Project</h3>
+<h3 id='goodpractice'>Good Practice - Reset the Project</h3>
 
 [Go Back to Summary](#summary)
 
