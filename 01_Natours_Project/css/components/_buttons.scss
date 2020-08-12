@@ -3,7 +3,7 @@
     text-decoration: none;
     display: inline-block;
     border-radius: 10rem;
-    font-size: 1.6rem;
+    font-size: $default-font-size;
 
     //_ EASIEST - TRANSFORM
     transition: all 0.2s;
@@ -46,5 +46,27 @@
         left: 0;
         z-index: -1;
         transition: all 0.4s;
+    }
+}
+
+.btn-text {
+    color: $color-primary;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 0.1rem solid $color-primary;
+    padding: 0.3rem;
+    font-size: $default-font-size;
+    transform: all 0.2s;
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black, 0.15);
+        transform: translateY(-0.2rem);
+    }
+
+    &:active {
+        box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
+        transform: translateY(0);
     }
 }

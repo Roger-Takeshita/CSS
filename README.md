@@ -11,6 +11,10 @@
         -   [Converting Pixel to REM](#convertingpxtorem)
         -   [Good Practice - Reseting the Project](#goodpractice)
         -   [Selecting CSS Attributes](#selectingattributes)
+        -   [-webkit-background-clip - Background Text Styling](#webkitbackgroundclip)
+        -   [Advanced Hover](#advancedhover)
+            -   [Hover Selecting Modifiers](#hoverselectingmodifier)
+        -   [Outline vs Border](#outlinevsborder)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -23,8 +27,10 @@
     -   [Sass Partials](#sasspartials)
         -   [Import Partials](#sassimportpartial)
 
+<!-- = CSS -->
 <h1 id='css'>CSS</h1>
 
+<!-- _ CSS BASICS -->
 <h2 id='cssbasics'>Basics</h2>
 
 <h3 id='resetproject'>Reset Project</h3>
@@ -392,6 +398,125 @@
       }
     ```
 
+<h3 id='webkitbackgroundclip'>-webkit-background-clip - Background Text Styling</h3>
+
+[Go Back to Summary](#summary)
+
+-   The `background-clip` CSS property sets whether an element's background extends underneath its border box, padding box, or content box.
+-   When we set `background-clip: text;` the background is clipped exactly where is the text, so we can set the text to `transparent` just to show the background.
+
+    -   Why would we do something like that? Well we can define the background to `background-image: linear-gradient();` then our text would be with gradient colors
+
+    ```SCSS
+      .heading-secondary {
+          font-size: 3.5rem;
+          text-transform: uppercase;
+          font-weight: 700;
+          display: inline-block;
+          background-image: linear-gradient(
+              $color-primary-light,
+              $color-primary-dark
+          );
+          -webkit-background-clip: text;
+          color: transparent;
+      }
+    ```
+
+<h3 id='advancedhover'>Advanced Hover</h3>
+
+[Go Back to Summary](#summary)
+
+```SCSS
+  .composition {
+      position: relative;
+
+      &__photo {
+          width: 55%;
+          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
+          border-radius: 0.2rem;
+          position: absolute;
+          z-index: 10;
+          outline-offset: 2rem;
+          transition: all 0.2s;
+
+          &--p1 {
+              left: 0;
+              top: -2rem;
+          }
+          &--p2 {
+              right: 0;
+              top: 2rem;
+          }
+          &--p3 {
+              left: 20%;
+              top: 10rem;
+          }
+          &:hover {
+              transform: scale(1.05) translateY(-0.5rem);
+              box-shadow: 0 2rem 4rem rgba($color-black, 0.5);
+              z-index: 20;
+              outline: 1.5rem solid $color-primary;
+          }
+      }
+      &:hover &__photo:not(:hover) {
+          transform: scale(0.95) translateY(0.5rem);
+      }
+  }
+```
+
+<h4 id='hoverselectingmodifier'>Hover Selecting Modifiers</h4>
+
+```SCSS
+  &:hover &__photo:not(:hover) {
+      transform: scale(0.95);
+  }
+```
+
+-   in this case we are:
+    -   when `div` is `hovered`
+    -   then select the `composition__photo`
+    -   then with the the `elements that are not hovered` scale down to `95%`
+
+<h3 id='outlinevsborder'>Outline vs Border</h3>
+
+[Go Back to Summary](#summary)
+
+-   `outline` is similar to `border`, we can active the same result with
+
+    ```SCSS
+      div {
+        outline: 1.5rem solid red;
+      }
+    ```
+
+    ```SCSS
+      div {
+        border: 1.5rem solid red;
+      }
+    ```
+
+-   The difference really shines when we need to add an offset for the border
+
+    ```SCSS
+      &__photo {
+          width: 55%;
+          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
+          border-radius: 0.2rem;
+          position: absolute;
+          z-index: 10;
+          outline-offset: 2rem;
+          transition: all 0.2s;
+
+          &:hover {
+              transform: scale(1.05) translateY(-0.5rem);
+              box-shadow: 0 2rem 4rem rgba($color-black, 0.5);
+              z-index: 20;
+              outline: 1.5rem solid $color-primary;
+          }
+      }
+    ```
+
+<!-- _ ANIMATION -->
 <h2 id='animation'>Animation</h2>
 
 <h3 id='keyframes'>@keyframes</h3>
@@ -672,6 +797,7 @@
       }
     ```
 
+<!-- = BEM -->
 <h1 id='bem'>BEM (Block Element Modifier) Methodology</h1>
 
 [Go Back to Summary](#summary)
@@ -877,6 +1003,7 @@
       }
     ```
 
+<!-- = SASS -->
 <h1 id='sass'>Sass</h1>
 
 [Go Back to Summary](#summary)
@@ -891,6 +1018,7 @@
     -   **Extends**: to make different selectors inherit declarations that are common to all of them
     -   **Control Directives**: for writing complex code using conditionals and loops
 
+<!-- _ SASS VARIABLE -->
 <h2 id='sassvariables'>Sass Variables and Nesting</h2>
 
 [Go Back to Summary](#summary)
@@ -1002,6 +1130,7 @@
           }
         ```
 
+<!-- _ SASS MIXIN -->
 <h2 id='sassmixin'>Sass Mixin</h2>
 
 [Go Back to Summary](#summary)
@@ -1073,6 +1202,7 @@
   }
 ```
 
+<!-- _ SASS FUNCTIONS -->
 <h2 id='sassfunctions'>Sass Functions</h2>
 
 [Go Back to Summary](#summary)
@@ -1095,12 +1225,13 @@
       }
     ```
 
+<!-- _ SASS EXTEND -->
 <h2 id='sassextend'>Sass Extend</h2>
-
 [Go Back to Summary](#summary)
 
 -   `@extend` basically we can extend/inherit any style from any element
 -   We can create a **placeholder** to hold certain styles
+
 
     ```SCSS
       %btn-palcehodler {
@@ -1133,6 +1264,7 @@
 -   The difference between creating a **placeholder** and **mixin**
     -   We only use **placeholder** if the elements are the same
 
+<!-- _ SASS PARTIALS -->
 <h2 id='sasspartials'>Sass Partials</h2>
 
 [Go Back to Summary](#summary)
