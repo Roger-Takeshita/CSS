@@ -7,9 +7,10 @@
             -   [HTML Element](#htmlelement)
         -   [Converting Pixel to REM](#convertingpxtorem)
     -   [Styling](#styling)
-        -   [Adding Background Image](#addingbgimage)
+        -   [Background Image](#addingbgimage)
             -   [clip-path: polygon()](#clipathpolygon)
             -   [Alternative to clip-path](#alternativetoclippath)
+        -   [Background Video](#backgroundvideo)
         -   [Positioning](#positioning)
             -   [Centering Element - Absolute Position](#centeringelement)
         -   [Span Element](#spanelement)
@@ -123,7 +124,7 @@
 <!-- _ CSS STYLING -->
 <h2 id='styling'>Styling</h2>
 
-<h3 id='addingbgimage'>Adding Background Image</h3>
+<h3 id='addingbgimage'>Background Image</h3>
 
 [Go Back to Summary](#summary)
 
@@ -177,6 +178,78 @@
           transform: skewY(7deg);
       }
     ```
+
+<h3 id='backgroundvideo'>Background Video</h3>
+
+[Go Back to Summary](#summary)
+
+-   The `<video>` tag is used to embed video content in a document, such as a movie clip or other video streams.
+-   The `<video>` tag contains one or more `<source>` tags with different video sources. The browser will choose the first source it supports.
+-   The text between the `<video>` and `</video>` tags will only be displayed in browsers that do not support the `<video>` element.
+-   There are three supported video formats in HTML: **MP4**, **WebM**, and **OGG**.
+-   List of supported browser
+
+    | Browser   | MP4 | WebM | Ogg |
+    | --------- | --- | ---- | --- |
+    | Edge / IE | YES | NO   | NO  |
+    | Chrome    | YES | YES  | YES |
+    | Firefox   | YES | YES  | YES |
+    | Safari    | YES | NO   | NO  |
+    | Opera     | YES | YES  | YES |
+
+-   how to use `<video>` tag:
+
+    -   First create the a `<section>`/`<div>` tag to display the video as a background
+    -   Then create a container for the video
+        -   Inside this container, we crate our `<video>` tag, **without the src** property
+            -   Here we can define other properties like `autoplay`, `mute`, `loop`...
+        -   Inside the `<video>` tag, we can define `<source>`
+            -   In our case we are defining 2 types of video (just in case the browser doesn't support the video format)
+            -   If the browser doesn't support any of the available formats, then it will display the msg `Your browser is not supported!`
+
+    ```HTML
+      <section class="section-stories">
+          <div class="bg-video">
+              <video class="bg-video__content" autoplay muted loop>
+                  <source src="img/video.mp4" type="video/mp4">
+                  <source src="img/video.webm" type="video/webm">
+                  Your browser is not supported!
+              </video>
+          </div>
+      </section>
+    ```
+
+    ```SCSS
+      .section-stories {
+          padding: 15rem 0;
+          position: relative;
+      }
+      .bg-video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          z-index: -1;
+          opacity: 0.15;
+          overflow: hidden;
+
+          &__content {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+          }
+      }
+    ```
+
+    -   in this case `.bg-video` we give `position: absolute;` in relation to the parent element `.section-stories` (`position: relative`), then we assign the `top` and `left`
+        -   then we define to use the max available space (width and height)
+        -   `z-index: -1;` just in case we are using displaying another element in front of the video
+        -   `opacity: 0.15;` to fade the video
+        -   `overflow: hidden;` to hide the overflowing video, just in case we have some
+    -   Then for the actual video
+        -   we give 100% of the available space (width and height)
+        -   `object-fit: cover;` to use all the available space without losing the aspect ratio
 
 <h3 id='positioning'>Positioning</h3>
 
@@ -500,6 +573,103 @@
               outline: 1.5rem solid $color-primary;
           }
       }
+    ```
+
+<h3 id='figureelement'>Figure Element</h3>
+
+[Go Back to Summary](#summary)
+
+-   The HTML `<figure>` **(Figure With Optional Caption) element** represents self-contained content, potentially with an optional caption, which is specified using the (`<figcaption>`) element. The figure, its caption, and its contents are referenced as a single unit.
+
+    ```HTML
+      <figure>
+          <img src="/media/examples/elephant-660-480.jpg"
+              alt="Elephant at sunset">
+          <figcaption>An elephant at sunset</figcaption>
+      </figure>
+    ```
+
+-   To work with `<figure>` we have to follow the define the following boilerplate
+
+    -   `width` and `height`
+    -   `float` position, and float only works with defined width and height
+    -   `shape-outside`, could be a **polygon**, **circle**...
+        -   **internet explorer doesn't support this property**
+        -   the `shape-outside` only defines the shape around the element
+        -   if we want to look like a circle we need to user the `clip-path` property
+
+    ```HTML
+      <div class="story">
+          <figure class="story__shape">
+
+          </figure>
+          <div class="story__text">
+              <h3 class="heading-tertiary u-margin-bottom-small">
+                  I had the best weekend with my family
+              </h3>
+              <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nulla eos corrupti
+                  exercitationem quos! Non corrupti, culpa deleniti quisquam commodi quam minima fugit nihil
+                  velit ab doloremque recusandae natus magni! Lorem ipsum dolor sit, amet consectetur
+                  adipisicing elit. Expedita quo dolor et molestias, qui illo temporibus perferendis iure
+                  eveniet aperiam similique nobis fugiat corrupti ab deleniti, laborum reiciendis blanditiis
+                  at.
+              </p>
+          </div>
+      </div>
+    ```
+
+    ```SCSS
+      .story {
+          width: 75%;
+          margin: 0 auto;
+          box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+          background-color: $color-white;
+          border-radius: 0.3rem;
+          padding: 6rem;
+          padding-left: 9rem;
+          font-size: $default-font-size;
+
+          &__shape {
+              width: 15rem;
+              height: 15rem;
+              float: left;
+              background-color: red;
+              -webkit-shape-outside: circle(50% at 50% 50%);
+              shape-outside: circle(50% at 50% 50%);
+              -webkit-clip-path: circle(50% at 50% 50%);
+              clip-path: circle(50% at 50% 50%);
+          }
+      }
+    ```
+
+<h4 id='float'>Float</h4>
+
+-   When we are working with `float` property, the best way to center the object is using `transform`
+-   if we try to user `margin` or `padding` this could mess up with our styling
+
+<h3 id='filter'>Filters</h3>
+
+[Go Back to Summary](#summary)
+
+-   The **filter** CSS property applies graphical effects like blur or color shift to an element. Filters are commonly used to adjust the rendering of images, backgrounds, and borders.
+-   Included in the CSS standard are several functions that achieve predefined effects. You can also reference an SVG filter with a URL to an SVG filter element.
+
+    ```SCSS
+      /* <filter-function> values */
+      filter: blur(5px);
+      filter: brightness(0.4);
+      filter: contrast(200%);
+      filter: drop-shadow(16px 16px 20px blue);
+      filter: grayscale(50%);
+      filter: hue-rotate(90deg);
+      filter: invert(75%);
+      filter: opacity(25%);
+      filter: saturate(30%);
+      filter: sepia(60%);
+
+      /* Multiple filters */
+      filter: contrast(175%) brightness(3%);
     ```
 
 <!-- _ ANIMATION -->
