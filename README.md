@@ -11,12 +11,22 @@
             -   [clip-path: polygon()](#clipathpolygon)
             -   [Alternative to clip-path](#alternativetoclippath)
         -   [Background Video](#backgroundvideo)
+        -   [Advanced linear-gradient()](advancedgradient)
         -   [Positioning](#positioning)
             -   [Centering Element - Absolute Position](#centeringelement)
         -   [Span Element](#spanelement)
         -   [Selecting CSS Attributes](#selectingattributes)
         -   [-webkit-background-clip - Background Text Styling](#webkitbackgroundclip)
         -   [Outline vs Border](#outlinevsborder)
+        -   [Figure Element](#figureelement)
+            -   [Float](#float)
+        -   [Filters](#filter)
+        -   [Chaining Pseudo Classes](#chainingpsudeoclasses)
+        -   [CSS Combinator](#csscombinator)
+            -   [Descendent Selector](#descendantselector)
+            -   [Child Selector](#childselector)
+            -   [Adjacent Sibling Selector](#adjacentsiblingselector)
+            -   [General Sibling Selector](#generalsibligselector)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -250,6 +260,34 @@
     -   Then for the actual video
         -   we give 100% of the available space (width and height)
         -   `object-fit: cover;` to use all the available space without losing the aspect ratio
+
+<h3 id='advancedgradient'>Advanced linear-gradient()</h3>
+
+[Go Back to Summary](#summary)
+
+-   An alternative to `clip-path` is the `linear-gradient()`, where we can define:
+
+    -   The angle of the gradient
+    -   then we define the initial color (0%)
+    -   the middle color at 50%
+    -   the end color will be applied the last color until the end (100%)
+        -   So if we define 2 colors at the same point, we don't give space enough to create the gradient
+
+    ```SCSS
+      .book {
+          background-image: linear-gradient(
+                  105deg,
+                  rgba($color-white, 0.85) 0%,
+                  rgba($color-white, 0.85) 50%,
+                  transparent 50%
+              ),
+              url('../img/nat-10.jpg');
+          background-size: cover;
+          border-radius: 0.3rem;
+          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2);
+          height: 50rem;
+      }
+    ```
 
 <h3 id='positioning'>Positioning</h3>
 
@@ -670,6 +708,262 @@
 
       /* Multiple filters */
       filter: contrast(175%) brightness(3%);
+    ```
+
+<h3 id='chainingpsudeoclasses'>Chaining Pseudo Classes</h3>
+
+[Go Back to Summary](#summary)
+
+-   we can use chaining pseudo classes to to some form validations
+
+    -   [placeholder](https://css-tricks.com/almanac/selectors/p/placeholder/)
+
+    ```SCSS
+      &__input {
+          font-size: 1.5rem;
+          font-family: inherit;
+          color: inherit;
+          padding: 1.5rem 2rem;
+          border-radius: 0.2rem;
+          background-color: rgba($color-white, 0.5);
+          border: none;
+          border-bottom: 0.3rem solid transparent;
+          width: 40%;
+          display: block;
+          transition: all 0.3s;
+
+          &:focus {
+              outline: none;
+              box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+              border-bottom: 0.3rem solid $color-primary;
+          }
+          &:focus:invalid {
+              border-bottom: 0.3rem solid $color-secondary-dark;
+          }
+          &::-webkit-input-placeholder {
+              color: $color-grey-dark-2;
+          }
+          &:valid {
+              border-bottom: 0.3rem solid $color-primary;
+          }
+          &:invalid {
+              border-bottom: 0.3rem solid $color-secondary-dark;
+          }
+      }
+    ```
+
+<h3 id='csscombinator'>CSS Combinator</h3>
+
+[Go Back to Summary](#summary)
+
+-   A CSS selector can contain more than one simple selector. Between the simple selectors, we can include a combinator.
+-   There are four different combinators in CSS:
+
+    -   descendant selector (`space`)
+    -   child selector (`>`)
+    -   adjacent sibling selector (`+`)
+    -   general sibling selector (`~`)
+
+-   We can use theses combinations to style the adjacent element
+
+    ```SCSS
+      &__label {
+          font-size: 1.2rem;
+          font-weight: 700;
+          margin-left: 2rem;
+          margin-top: 0.7rem;
+          display: block;
+          transition: all 0.3s;
+      }
+      &__input:placeholder-shown + &__label {
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-4rem);
+      }
+    ```
+
+    ```HTML
+      <form action="#" class="form">
+          <div class="u-margin-bottom-medium">
+              <h2 class="heading-secondary">
+                  Start booking now
+              </h2>
+          </div>
+          <div class="form__group">
+              <input type="text" class="form__input" placeholder="Full name" required
+                  autocomplete="off" id="name">
+              <label for="name" class="form__label">Full name</label>
+          </div>
+          <div class="form__group">
+              <input type="email" class="form__input" placeholder="Email address" required
+                  autocomplete="off" id="email">
+              <label for="email" class="form__label">Email address</label>
+          </div>
+      </form>
+    ```
+
+    ```SCSS
+      .form {
+          &__group:not(:last-child) {
+              margin-bottom: 2rem;
+          }
+          &__input {
+              font-size: 1.5rem;
+              font-family: inherit;
+              color: inherit;
+              padding: 1.5rem 2rem;
+              border-radius: 0.2rem;
+              background-color: rgba($color-white, 0.5);
+              border: none;
+              border-bottom: 0.3rem solid transparent;
+              width: 40%;
+              display: block;
+              transition: all 0.3s;
+
+              &:focus {
+                  outline: none;
+                  box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+                  border-bottom: 0.3rem solid $color-primary;
+              }
+              &:focus:invalid {
+                  border-bottom: 0.3rem solid $color-secondary-dark;
+              }
+              &::-webkit-input-placeholder {
+                  color: $color-grey-dark-2;
+              }
+              &:valid {
+                  border-bottom: 0.3rem solid $color-primary;
+              }
+              &:invalid {
+                  border-bottom: 0.3rem solid $color-secondary-dark;
+              }
+          }
+          &__label {
+              font-size: 1.2rem;
+              font-weight: 700;
+              margin-left: 2rem;
+              margin-top: 0.7rem;
+              display: block;
+              transition: all 0.3s;
+          }
+          &__input:placeholder-shown + &__label {
+              opacity: 0;
+              visibility: hidden;
+              transform: translateY(-4rem);
+          }
+      }
+    ```
+
+-   Creating a radio button using **span** and **input**
+
+    ```HTML
+      <div class="form__group">
+          <div class="form__radio-group">
+              <input type="radio" class="form__radio-input" id="small" name="size">
+              <label for="small" class="form__radio-label">
+                  <span class="form__radio-button"></span>
+                  Small tour group
+              </label>
+          </div>
+          <div class="form__radio-group">
+              <input type="radio" class="form__radio-input" id="large" name="size">
+              <label for="large" class="form__radio-label">
+                  <span class="form__radio-button"></span>
+                  Large tour group
+              </label>
+          </div>
+      </div>
+    ```
+
+    ```SCSS
+      .form {
+          &__radio-group {
+              width: 20%;
+              display: inline-block;
+          }
+          &__radio-label {
+              font-size: $default-font-size;
+              cursor: pointer;
+              position: relative;
+              padding-left: 5rem;
+          }
+          &__radio-button {
+              height: 3rem;
+              width: 3rem;
+              border: 0.5rem solid $color-primary;
+              border-radius: 50%;
+              display: inline-block;
+              position: absolute;
+              top: -0.4rem;
+              left: 0;
+
+              &::after {
+                  height: 1.3rem;
+                  width: 1.3rem;
+                  content: '';
+                  display: inline-block;
+                  border-radius: 50%;
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  background-color: $color-primary;
+                  opacity: 0;
+                  transition: opacity 0.2s;
+              }
+          }
+          &__radio-input {
+              display: none;
+          }
+          &__radio-input:checked ~ &__radio-label &__radio-button::after {
+              opacity: 1;
+          }
+      }
+    ```
+
+<h4 id='descendantselector'>Descendent Selector</h4>
+
+-   The descendant selector matches all elements that are descendants of a specified element.
+-   The following example selects all `<p>` elements inside `<div>` elements:
+
+    ```CSS
+      div p {
+        background-color: yellow;
+      }
+    ```
+
+<h4 id='childselector'>Child Selector</h4>
+
+-   The child selector selects all elements that are the children of a specified element.
+-   The following example selects all `<p>` elements that are children of a `<div>` element:
+
+    ```CSS
+      div > p {
+        background-color: yellow;
+      }
+    ```
+
+<h4 id='adjacentsiblingselector'>Adjacent Sibling Selector</h4>
+
+-   The adjacent sibling selector selects all elements that are the adjacent siblings of a specified element.
+-   Sibling elements must have the same parent element, and "adjacent" means "immediately following".
+-   The following example selects all `<p>` elements that are placed immediately after `<div>` elements:
+
+    ```CSS
+      div + p {
+        background-color: yellow;
+      }
+    ```
+
+<h4 id='generalsibligselector'>General Sibling Selector</h4>
+
+-   The general sibling selector selects all elements that are siblings of a specified element.
+-   The following example selects all `<p>` elements that are siblings of `<div>` elements:
+
+    ```CSS
+      div ~ p {
+        background-color: yellow;
+      }
     ```
 
 <!-- _ ANIMATION -->

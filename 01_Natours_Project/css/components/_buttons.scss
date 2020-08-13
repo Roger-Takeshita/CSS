@@ -5,12 +5,16 @@
     border-radius: 10rem;
     font-size: $default-font-size;
 
+    //! Change for the <button> element
+    border: none;
+    cursor: pointer;
+
     //_ EASIEST - TRANSFORM
     transition: all 0.2s;
     position: relative;
     &--white {
         background-color: $color-white;
-        color: $color-grey-dark;
+        color: $color-gray-dark-1;
         padding: 1.5rem 4rem;
         &::after {
             background-color: $color-white;
@@ -39,7 +43,8 @@
             opacity: 0;
         }
     }
-    &:active {
+    &:active,
+    &:focus {
         transform: translateY(-0.1rem);
         box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
     }
