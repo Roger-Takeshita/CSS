@@ -3,23 +3,27 @@
 -   [CSS](#css)
     -   [Basics](#cssbasics)
         -   [Reset Project](#resetproject)
-        -   [Body Element](#body)
+            -   [Body Element](#bodyelement)
+            -   [HTML Element](#htmlelement)
+        -   [Converting Pixel to REM](#convertingpxtorem)
+    -   [Styling](#styling)
         -   [Adding Background Image](#addingbgimage)
             -   [clip-path: polygon()](#clipathpolygon)
             -   [Alternative to clip-path](#alternativetoclippath)
         -   [Positioning](#positioning)
             -   [Centering Element - Absolute Position](#centeringelement)
         -   [Span Element](#spanelement)
-        -   [Converting Pixel to REM](#convertingpxtorem)
-        -   [Good Practice - Reset the Project](#goodpractice)
         -   [Selecting CSS Attributes](#selectingattributes)
         -   [-webkit-background-clip - Background Text Styling](#webkitbackgroundclip)
-        -   [Advanced Hover](#advancedhover)
-            -   [Hover Selecting Modifiers](#hoverselectingmodifier)
         -   [Outline vs Border](#outlinevsborder)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
+        -   [Advanced Hover](#advancedhover)
+            -   [Hover Selecting Modifiers](#hoverselectingmodifier)
+        -   [Rotating](#rotating)
+            -   [Perspective](#perspective)
+            -   [Backface-visibility](#backfacevisibility)
 -   [BEM (Block Element Modifier) Methodology](#bem)
 -   [Sass](#sass)
     -   [Sass Variables and Nesting](#sassvariables)
@@ -51,23 +55,73 @@
       }
     ```
 
-<h3 id='body'>Body Element</h3>
+-   a good practice instead of just selecting the all elements (`*`), we can select the `::before` and `::after` pseudo elements, and define the reset parameters
 
-[Go Back to Summary](#summary)
+    ```SCSS
+      *,
+      *::before,
+      *::after {
+          margin: 0;
+          padding: 0;
+          box-sizing: inherit;
+      }
+    ```
 
--   A good practice is to define the `font-family` in the body element, instead of the generic `*`
+<h4 id='bodyelement'>Body Element</h4>
 
-    ```CSS
+-   and then inside of the `body` element, we define the `box-sizing: border-box;`
+
+    -   the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
+    -   in the `body` we can define the `font-family`, instead of the generic `*`
+
+    ```SCSS
       body {
           font-family: 'Lato', sans-serif;
           font-weight: 400;
-          font-size: 16px;
-          //- 1.7 times bigger than the font height
+          font-size: 0.16rem;
           line-height: 1.7;
           color: #777;
-          padding: 30px;
+          padding: 3rem;
+          box-sizing: border-box;
       }
     ```
+
+<h4 id='htmlelement'>HTML Element</h4>
+
+-   another good practice is to define the default `font-size` of the project
+
+        -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
+
+        ```SCSS
+          html {
+              font-size: 10px;
+          }
+        ```
+
+        -   We could also use in **%**, we just have to convert the `10px`.
+        -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
+
+        ```SCSS
+          html {
+              font-size: 62.5%;
+          }
+        ```
+
+<h3 id='convertingpxtorem'>Converting Pixel to REM</h3>
+
+[Go Back to Summary](#summary)
+
+-   If we have set our `html` to `font-size: 16px` this means that `1rem` is equal to `16px`
+-   So we can convert `rem` using the **rule of three**
+
+    |  px  |    rem     |
+    | :--: | :--------: |
+    | 15px | 0.9375 rem |
+    | 16px |   1 rem    |
+    | 17px | 1.0625 rem |
+
+<!-- _ CSS STYLING -->
+<h2 id='styling'>Styling</h2>
 
 <h3 id='addingbgimage'>Adding Background Image</h3>
 
@@ -104,9 +158,12 @@
 
     ```SCSS
       .header {
+          -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
           clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
       }
     ```
+
+    -   `-webkit-clip-path` to support different browsers
 
 <h4 id='alternativetoclippath'>Alternative to clip-path</h4>
 
@@ -239,70 +296,6 @@
                   }
               }
           }
-      }
-    ```
-
-<h3 id='convertingpxtorem'>Converting Pixel to REM</h3>
-
-[Go Back to Summary](#summary)
-
--   If we have set our `html` to `font-size: 16px` this means that `1rem` is equal to `16px`
--   So we can convert `rem` using the **rule of three**
-
-    |  px  |    rem     |
-    | :--: | :--------: |
-    | 15px | 0.9375 rem |
-    | 16px |   1 rem    |
-    | 17px | 1.0625 rem |
-
-<h3 id='goodpractice'>Good Practice - Reset the Project</h3>
-
-[Go Back to Summary](#summary)
-
--   a good practice instead of just selecting the all elements (`*`), we can select the `::before` and `::after` pseudo elements, and define the reset parameters
-
-    ```SCSS
-      *,
-      *::before,
-      *::after {
-          margin: 0;
-          padding: 0;
-          box-sizing: inherit;
-      }
-    ```
-
-    -   and then inside of the `body` element, we define the `box-sizing` to `border-box`
-
-    ```SCSS
-      body {
-          font-family: 'Lato', sans-serif;
-          font-weight: 400;
-          font-size: 0.16rem;
-          line-height: 1.7;
-          color: #777;
-          padding: 3rem;
-
-          //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
-          box-sizing: border-box;
-      }
-    ```
-
--   another good practice is to define the default `font-size` of the project
-
-    -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
-
-    ```SCSS
-      html {
-          font-size: 10px;
-      }
-    ```
-
-    -   We could also use in **%**, we just have to convert the `10px`.
-    -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
-
-    ```SCSS
-      html {
-          font-size: 62.5%;
       }
     ```
 
@@ -469,61 +462,6 @@
           color: transparent;
       }
     ```
-
-<h3 id='advancedhover'>Advanced Hover</h3>
-
-[Go Back to Summary](#summary)
-
-```SCSS
-  .composition {
-      position: relative;
-
-      &__photo {
-          width: 55%;
-          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
-          border-radius: 0.2rem;
-          position: absolute;
-          z-index: 10;
-          outline-offset: 2rem;
-          transition: all 0.2s;
-
-          &--p1 {
-              left: 0;
-              top: -2rem;
-          }
-          &--p2 {
-              right: 0;
-              top: 2rem;
-          }
-          &--p3 {
-              left: 20%;
-              top: 10rem;
-          }
-          &:hover {
-              transform: scale(1.05) translateY(-0.5rem);
-              box-shadow: 0 2rem 4rem rgba($color-black, 0.5);
-              z-index: 20;
-              outline: 1.5rem solid $color-primary;
-          }
-      }
-      &:hover &__photo:not(:hover) {
-          transform: scale(0.95) translateY(0.5rem);
-      }
-  }
-```
-
-<h4 id='hoverselectingmodifier'>Hover Selecting Modifiers</h4>
-
-```SCSS
-  &:hover &__photo:not(:hover) {
-      transform: scale(0.95);
-  }
-```
-
--   in this case we are:
-    -   when `div` is `hovered`
-    -   then select the `composition__photo`
-    -   then with the the `elements that are not hovered` scale down to `95%`
 
 <h3 id='outlinevsborder'>Outline vs Border</h3>
 
@@ -845,7 +783,228 @@
       }
     ```
 
-<!-- = BEM -->
+<h3 id='advancedhover'>Advanced Hover</h3>
+
+[Go Back to Summary](#summary)
+
+```SCSS
+  .composition {
+      position: relative;
+
+      &__photo {
+          width: 55%;
+          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
+          border-radius: 0.2rem;
+          position: absolute;
+          z-index: 10;
+          outline-offset: 2rem;
+          transition: all 0.2s;
+
+          &--p1 {
+              left: 0;
+              top: -2rem;
+          }
+          &--p2 {
+              right: 0;
+              top: 2rem;
+          }
+          &--p3 {
+              left: 20%;
+              top: 10rem;
+          }
+          &:hover {
+              transform: scale(1.05) translateY(-0.5rem);
+              box-shadow: 0 2rem 4rem rgba($color-black, 0.5);
+              z-index: 20;
+              outline: 1.5rem solid $color-primary;
+          }
+      }
+      &:hover &__photo:not(:hover) {
+          transform: scale(0.95) translateY(0.5rem);
+      }
+  }
+```
+
+<h4 id='hoverselectingmodifier'>Hover Selecting Modifiers</h4>
+
+```SCSS
+  &:hover &__photo:not(:hover) {
+      transform: scale(0.95);
+  }
+```
+
+-   in this case we are:
+    -   when `div` is `hovered`
+    -   then select the `composition__photo`
+    -   then with the the `elements that are not hovered` scale down to `95%`
+
+<h3 id='rotating'>Rotating</h3>
+
+[Go Back to Summary](#summary)
+
+-   To rotate an element, we can simply call transform do to so, but the effect it's not that great.
+-   It's hard to distinguish what is rotating
+
+    ```SCSS
+      .card {
+          &:hover {
+              transform: rotateY(180deg);
+          }
+      }
+    ```
+
+-   the final result we will have:
+
+    ```HTML
+      <div class="card">
+          <div class="card__side card__side--front">
+              FRONT
+          </div>
+          <div class="card__side card__side--back card__side--back-1">
+              BACK
+          </div>
+      </div>
+    ```
+
+    ```SCSS
+      .card {
+          perspective: 150rem;
+          -moz-perspective: 150rem;
+          position: relative;
+          height: 50rem;
+
+          &__side {
+              height: 50rem;
+              transition: all 0.8s ease;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              backface-visibility: hidden;
+              border-radius: 0.3rem;
+              box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+              &--front {
+                  background-color: $color-white;
+              }
+              &--back {
+                  transform: rotateY(-180deg);
+
+                  &-1 {
+                      background-image: linear-gradient(
+                          to right bottom,
+                          $color-secondary-light,
+                          $color-secondary-dark
+                      );
+                  }
+              }
+          }
+          &:hover &__side--front {
+              transform: rotateY(180deg);
+          }
+          &:hover &__side--back {
+              transform: rotateY(0);
+          }
+      }
+    ```
+
+<h4 id='perspective'>Perspective</h4>
+
+-   Adding a **perspective** helps us to visualize what is rotating
+-   We added the `-moz-perspective` to make it work in mozilla firefox
+-   The **perspective** always have to be declared on the parent element
+-   Then we create the element that we want to rotate
+    ```SCSS
+      &__side {
+          background-color: orangered;
+          height: 50rem;
+          transition: all 0.8s;
+      }
+    ```
+-   After that we create the condition
+
+    ```SCSS
+      &:hover &__side {
+          transform: rotateY(180deg);
+      }
+    ```
+
+    -   In this case, when we **hover** the `card` element, then the `__side` element will transform (rotate 180 degrees on the Y axis)
+
+    ```SCSS
+      .card {
+          perspective: 150rem;
+          -moz-perspective: 150rem;
+
+          &__side {
+              background-color: orangered;
+              height: 50rem;
+              transition: all 0.8s;
+          }
+          &:hover &__side {
+              transform: rotateY(180deg);
+          }
+      }
+    ```
+
+<h4 id='backfacevisibility'>Backface-visibility</h4>
+
+-   the `backface-visibility` property hides the back of the element, in the case we are rotating an element, we can see the text rotated as well
+-   To the back card be in the back of the front card, we need to define `position: relative;` to the parent element
+    -   and because we gave the parent a **relative position** and the child an **absolute position**. the element loses their height, that's why we need to give the same height of the child element to the parent element, otherwise, the element will have only the necessary height
+-   To finish our element, we just need to update the hover condition
+
+    -   when the card is loaded
+        -   the front of the card is normal (not rotated)
+        -   the back of the card is rotated 180 degrees
+    -   when we hover the card
+        -   the front of the card is rotated -180 degrees
+            -   the `-` minus, it's just to give the impression that the card rotated 180 degrees completed
+        -   the back of the card is back to normal (not rotated)
+
+    ```SCSS
+      .card {
+          perspective: 150rem;
+          -moz-perspective: 150rem;
+          position: relative;
+          height: 50rem;
+
+          &__side {
+              height: 50rem;
+              transition: all 0.8s ease;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              backface-visibility: hidden;
+              border-radius: 0.3rem;
+              box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+              &--front {
+                  background-color: $color-white;
+              }
+              &--back {
+                  transform: rotateY(-180deg);
+
+                  &-1 {
+                      background-image: linear-gradient(
+                          to right bottom,
+                          $color-secondary-light,
+                          $color-secondary-dark
+                      );
+                  }
+              }
+          }
+          &:hover &__side--front {
+              transform: rotateY(180deg);
+          }
+          &:hover &__side--back {
+              transform: rotateY(0);
+          }
+      }
+    ```
+
+<!-- = BEM (Block Element Modifier) -->
 <h1 id='bem'>BEM (Block Element Modifier) Methodology</h1>
 
 [Go Back to Summary](#summary)

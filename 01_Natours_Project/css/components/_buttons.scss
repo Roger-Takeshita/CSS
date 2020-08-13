@@ -16,6 +16,14 @@
             background-color: $color-white;
         }
     }
+    &--green {
+        background-color: $color-primary;
+        color: $color-white;
+        padding: 1.5rem 4rem;
+        &::after {
+            background-color: $color-primary;
+        }
+    }
     &--animated {
         //- Type of animation, duration, mode, delay
         animation: moveInBottom 0.5s ease-out 0.75s;
