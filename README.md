@@ -15,13 +15,14 @@
         -   [Positioning](#positioning)
             -   [Centering Element - Absolute Position](#centeringelement)
         -   [Span Element](#spanelement)
+        -   [Column Property](#columnproperty)
+            -   [Hyphens](#hyphens)
         -   [Selecting CSS Attributes](#selectingattributes)
         -   [-webkit-background-clip - Background Text Styling](#webkitbackgroundclip)
         -   [Outline vs Border](#outlinevsborder)
         -   [Figure Element](#figureelement)
             -   [Float](#float)
         -   [Filters](#filter)
-        -   [Chaining Pseudo Classes](#chainingpsudeoclasses)
         -   [CSS Combinator](#csscombinator)
             -   [Descendent Selector](#descendantselector)
             -   [Child Selector](#childselector)
@@ -30,11 +31,17 @@
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
+            -   [Pseudo Classes](#pseudoclasses)
+            -   [Pseudo Elements](#pseudoelements)
+            -   [Chaining Pseudo Classes - Validation](#chainingpsudeoclasses)
+            -   [Cubic-Bezier](#cubicbezier)
         -   [Advanced Hover](#advancedhover)
             -   [Hover Selecting Modifiers](#hoverselectingmodifier)
         -   [Rotating](#rotating)
             -   [Perspective](#perspective)
             -   [Backface-visibility](#backfacevisibility)
+    -   [Popup](#popup)
+        -   [Target](#target)
 -   [BEM (Block Element Modifier) Methodology](#bem)
 -   [Sass](#sass)
     -   [Sass Variables and Nesting](#sassvariables)
@@ -410,6 +417,39 @@
       }
     ```
 
+<h3 id='columnproperty'>Column Property</h3>
+
+[Go Back to Summary](#summary)
+
+-   the `column-count` property specifies the number of the columns that an element can have. Instead of creating another `div` to divide a paragraph into 2 columns
+
+    -   `column-gap` property specifies the gab between the columns, if we defined a specific `font-size` to the element, this will be the `rem` value to be considered.
+    -   `column-rule` property creates a line between the columns
+
+    ```SCSS
+      -moz-column-count: 2;
+      -moz-column-gap: 4rem;
+      -moz-column-rule: 1px solid $color-grey-light-2;
+      column-count: 2;
+      column-gap: 4rem;
+      column-rule: 1px solid $color-grey-light-2;
+
+      -moz-hyphens: auto;
+      -ms-hyphens: auto;
+      -webkit-hyphens: auto;
+    ```
+
+<h4 id='hyphens'>Hyphens</h4>
+
+[Go Back to Summary](#summary)
+
+-   `hyphens` property adds **hyphens**(`-`) between long words
+    -   `hyphens: none;`
+    -   `hyphens: manual;`
+    -   `hyphens: auto;`
+    -   To `hyphens` make it work, we need to define the language of the page, inside of the `html` tag
+        -   `<html lang="en">`
+
 <h3 id='selectingattributes'>Selecting CSS Attributes</h3>
 
 [Go Back to Summary](#summary)
@@ -708,48 +748,6 @@
 
       /* Multiple filters */
       filter: contrast(175%) brightness(3%);
-    ```
-
-<h3 id='chainingpsudeoclasses'>Chaining Pseudo Classes</h3>
-
-[Go Back to Summary](#summary)
-
--   we can use chaining pseudo classes to to some form validations
-
-    -   [placeholder](https://css-tricks.com/almanac/selectors/p/placeholder/)
-
-    ```SCSS
-      &__input {
-          font-size: 1.5rem;
-          font-family: inherit;
-          color: inherit;
-          padding: 1.5rem 2rem;
-          border-radius: 0.2rem;
-          background-color: rgba($color-white, 0.5);
-          border: none;
-          border-bottom: 0.3rem solid transparent;
-          width: 40%;
-          display: block;
-          transition: all 0.3s;
-
-          &:focus {
-              outline: none;
-              box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
-              border-bottom: 0.3rem solid $color-primary;
-          }
-          &:focus:invalid {
-              border-bottom: 0.3rem solid $color-secondary-dark;
-          }
-          &::-webkit-input-placeholder {
-              color: $color-grey-dark-2;
-          }
-          &:valid {
-              border-bottom: 0.3rem solid $color-primary;
-          }
-          &:invalid {
-              border-bottom: 0.3rem solid $color-secondary-dark;
-          }
-      }
     ```
 
 <h3 id='csscombinator'>CSS Combinator</h3>
@@ -1096,6 +1094,8 @@
 -   in this case we used `:hover` and added a `transform: translateY(-3px);` to do simply animation to move the button up
 -   and once it clicked `:active`, we animate again to `transform: translateY(-1px);`
 
+<h4 id='pseudoclasses'>Pseudo Classes</h4>
+
 -   **All CSS Pseudo Classes**
     | Selector | Example | Example description |
     | ------------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -1130,6 +1130,8 @@
     | :target | \#news:target | Selects the current active \#news element \(clicked on a URL containing that anchor name\) |
     | :valid | input:valid | Selects all `<input>` elements with a valid value |
     | :visited | a:visited | Selects all visited links |
+
+<h4 id='pseudoelements'>Pseudo Elements</h4>
 
 -   **All CSS Pseudo Elements**
 
@@ -1245,6 +1247,60 @@
               transition: all 0.4s;
           }
       }
+    ```
+
+<h4 id='chainingpsudeoclasses'>Chaining Pseudo Classes - Validation</h4>
+
+[Go Back to Summary](#summary)
+
+-   we can use chaining pseudo classes to to some form validations
+
+    -   [placeholder](https://css-tricks.com/almanac/selectors/p/placeholder/)
+
+    ```SCSS
+      &__input {
+          font-size: 1.5rem;
+          font-family: inherit;
+          color: inherit;
+          padding: 1.5rem 2rem;
+          border-radius: 0.2rem;
+          background-color: rgba($color-white, 0.5);
+          border: none;
+          border-bottom: 0.3rem solid transparent;
+          width: 40%;
+          display: block;
+          transition: all 0.3s;
+
+          &:focus {
+              outline: none;
+              box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+              border-bottom: 0.3rem solid $color-primary;
+          }
+          &:focus:invalid {
+              border-bottom: 0.3rem solid $color-secondary-dark;
+          }
+          &::-webkit-input-placeholder {
+              color: $color-grey-dark-2;
+          }
+          &:valid {
+              border-bottom: 0.3rem solid $color-primary;
+          }
+          &:invalid {
+              border-bottom: 0.3rem solid $color-secondary-dark;
+          }
+      }
+    ```
+
+<h4 id='cubicbezier'>Cubic-Bezier</h4>
+
+-   [Cubic-Bezier Graphic](https://easings.net/)
+-   [Cubic-Bezier Vizualization](https://cubic-bezier.com/#.17,.67,.83,.67)
+-   The `cubic-bezier()` function defines a Cubic Bezier curve.
+-   A Cubic Bezier curve is defined by four points P0, P1, P2, and P3. P0 and P3 are the start and the end of the curve and, in CSS these points are fixed as the coordinates are ratios. P0 is (0, 0) and represents the initial time and the initial state, P3 is (1, 1) and represents the final time and the final state.
+-   The `cubic-bezier()` function can be used with the animation-timing-function property and the transition-timing-function property.
+
+    ```CSS
+      cubic-bezier(x1,y1,x2,y2)
     ```
 
 <h3 id='advancedhover'>Advanced Hover</h3>
@@ -1467,6 +1523,129 @@
           }
       }
     ```
+
+<!-- _ POPUP -->
+<h2 id='popup'>Popup</h2>
+
+[Go Back to Summary](#summary)
+
+-   creating our popup coainter that will have the entire screen
+
+    ```HTML
+      <div class="popup" id="popup">
+          <div class="popup__content">
+              <div class="popup__left">
+                  <img src="img/nat-8.jpg" alt="Tour photo" class="popup__img">
+                  <img src="img/nat-9.jpg" alt="Tour photo" class="popup__img">
+              </div>
+              <div class="popup__right">
+                  <a href="#section-tours" class="popup__close">&times;</a>
+                  <h2 class="heading-secondary u-margin-bottom-small">Start booking now</h2>
+                  <h3 class="heading-tertiary u-margin-bottom-small">Important&ndash; Please read these terms before
+                      booking</h3>
+                  <p class="popup__text">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                      et dolore magna aliqua. Nunc congue nisi vitae suscipit tellus mauris a. Sagittis orci a scelerisque
+                      purus semper
+                      eget duis at. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam. Morbi blandit
+                      cursus risus at ultrices.
+                      In est ante in nibh mauris. Suspendisse interdum consectetur libero id faucibus nisl tincidunt. Mi
+                      tempus imperdiet
+                      nulla malesuada pellentesque elit eget gravida cum. Pellentesque pulvinar pellentesque habitant
+                      morbi tristique
+                      senectus et netus. Et netus et malesuada fames ac turpis egestas maecenas. Odio facilisis mauris sit
+                      amet massa vitae
+                      tortor condimentum. Turpis massa sed elementum tempus.
+                  </p>
+                  <a href="#" class="btn btn--green">Book now</a>
+              </div>
+          </div>
+      </div>
+    ```
+
+    ```SCSS
+      .popup {
+          width: 100vw;
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background-color: rgba($color-black, 0.8);
+          z-index: 300;
+          transition: all 0.3s;
+          opacity: 0;
+          visibility: hidden;
+
+          &__content {
+              @include centerHVABS;
+              width: 75%;
+              box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
+              background-color: $color-white;
+              border-radius: 0.3rem;
+              overflow: hidden;
+              display: flex;
+              transition: all 0.4s 0.2s;
+              transform: translate(-50%, -50%) scale(0.5);
+              opacity: 0;
+          }
+          &__left {
+              width: 33.3333%;
+              display: flex;
+              flex-direction: column;
+          }
+          &__right {
+              width: 66.6666%;
+              margin: auto 0;
+              padding: 3rem 5rem;
+          }
+          &__img {
+              display: block;
+              width: 100%;
+          }
+          &__text {
+              font-size: 1.4rem;
+              margin-bottom: 4rem;
+              -moz-column-count: 2;
+              -moz-column-gap: 4rem;
+              -moz-column-rule: 1px solid $color-grey-light-2;
+              column-count: 2;
+              column-gap: 4rem;
+              column-rule: 1px solid $color-grey-light-2;
+              -moz-hyphens: auto;
+              -ms-hyphens: auto;
+              -webkit-hyphens: auto;
+              hyphens: auto;
+          }
+          &:target {
+              opacity: 1;
+              visibility: visible;
+          }
+          &:target &__content {
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 1;
+          }
+          &__close {
+              position: absolute;
+              top: 2.5rem;
+              right: 2.5rem;
+              font-size: 3rem;
+              text-decoration: none;
+              display: inline-block;
+              transition: all 0.2s;
+              line-height: 1;
+
+              &:hover {
+                  color: $color-primary;
+              }
+          }
+      }
+    ```
+
+<h3 id='target'>Target</h3>
+
+[Go Back to Summary](#summary)
+
+-   in CSS we have a `:target` pseudo class, that activates when the element is on focus using the anchor tag `<a href="#popup">`
 
 <!-- = BEM (Block Element Modifier) -->
 <h1 id='bem'>BEM (Block Element Modifier) Methodology</h1>
