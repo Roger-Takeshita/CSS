@@ -72,7 +72,7 @@
             content: '';
             display: inline-block;
             border-radius: 50%;
-            @include centerHVABS;
+            @include center-abs-horizontal-vertical;
             background-color: $color-primary;
             opacity: 0;
             transition: opacity 0.2s;

@@ -50,6 +50,10 @@
     -   [Sass Extend](#sassextend)
     -   [Sass Partials](#sasspartials)
         -   [Import Partials](#sassimportpartial)
+-   [Responsive Web Design](#responsivedesign)
+    -   [Mobile First](#mobilefirst)
+    -   [Media Queries Sizes](#mediaqueriessizes)
+    -   [Media Query With SASS](#mediaquerysass)
 
 <!-- = CSS -->
 <h1 id='css'>CSS</h1>
@@ -1577,7 +1581,7 @@
           visibility: hidden;
 
           &__content {
-              @include centerHVABS;
+              @include center-abs-horizontal-vertical;
               width: 75%;
               box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
               background-color: $color-white;
@@ -1985,72 +1989,108 @@
 
 [Go Back to Summary](#summary)
 
-```SCSS
-  $color-primary: #f9ed69;
-  $color-secondary: #f08a5d;
-  $color-tertiary: #b83b5e;
-  $color-text-dark: #333;
-  $color-text-light: #eee;
-  $width-button: 150px;
+-   A `Mixin` is like a function, we can pass arguments, the only difference is that a `mixin` doesn't return anything, it only applies the style
 
-  @mixin clearfix {
-      &::after {
-          content: '';
-          clear: both;
-          display: table;
-      }
-  }
+    ```SCSS
+      $color-primary: #f9ed69;
+      $color-secondary: #f08a5d;
+      $color-tertiary: #b83b5e;
+      $color-text-dark: #333;
+      $color-text-light: #eee;
+      $width-button: 150px;
 
-  @mixin style-text-light ($color) {
-      text-decoration: none;
-      text-transform: uppercase;
-      color: $color;
-  }
-
-  ...
-
-  nav {
-      margin: 3rem;
-      background-color: $color-primary;
-      @include clearfix;
-  }
-
-  .navigation {
-      list-style: none;
-      float: left;
-
-      li {
-          display: inline-block;
-          margin-left: 3rem;
-
-          &:first-child {
-              margin: 0;
-          }
-
-          a {
-              @include style-text-light ($color-text-dark);
+      @mixin clearfix {
+          &::after {
+              content: '';
+              clear: both;
+              display: table;
           }
       }
-  }
 
-  .btn {
-      float: right;
+      @mixin style-text-light ($color) {
+          text-decoration: none;
+          text-transform: uppercase;
+          color: $color;
+      }
 
-      &__main, &__hot {
-          padding: 1rem;
-          display: inline-block;
-          text-align: center;
-          border-radius: 10rem;
-          width: $width-button;
-          background-color: $color-secondary;
-          @include style-text-light ($color-text-light);
+      ...
 
-          &:hover {
-              background-color: darken($color-secondary, 15%);
+      nav {
+          margin: 3rem;
+          background-color: $color-primary;
+          @include clearfix;
+      }
+
+      .navigation {
+          list-style: none;
+          float: left;
+
+          li {
+              display: inline-block;
+              margin-left: 3rem;
+
+              &:first-child {
+                  margin: 0;
+              }
+
+              a {
+                  @include style-text-light ($color-text-dark);
+              }
           }
       }
-  }
-```
+
+      .btn {
+          float: right;
+
+          &__main, &__hot {
+              padding: 1rem;
+              display: inline-block;
+              text-align: center;
+              border-radius: 10rem;
+              width: $width-button;
+              background-color: $color-secondary;
+              @include style-text-light ($color-text-light);
+
+              &:hover {
+                  background-color: darken($color-secondary, 15%);
+              }
+          }
+      }
+    ```
+
+<h3 id='usingmixin'>Calling a Mixin</h3>
+
+[Go Back to Summary](#summary)
+
+-   To call a `mixin` we just need to **@include** `<name-of-the-mixin>`
+-   With a `mixin` we can pass arguments
+
+    ```SCSS
+      a {
+          @include style-text-light ($color-text-dark);
+      }
+    ```
+
+-   Another thing that we can do with `mixin`, instead of passing an argument, we can pass a block of styles using **@content**
+-   So use the block of content we need to declare the mixing using the following boilerplate
+
+    ```SCSS
+      @mixin media-query-phone {
+          @media (max-with: 600px) {
+              @content
+          }
+      }
+    ```
+
+-   And when we call the `mixin`
+
+    ```SCSS
+      html {
+          @include media-query-phone {
+              font-size: 50%;
+          }
+      }
+    ```
 
 <!-- _ SASS FUNCTIONS -->
 <h2 id='sassfunctions'>Sass Functions</h2>
@@ -2128,3 +2168,159 @@
 
 -   To import a partial we just need to use the `@import` and then specify the path to the file `@import 'base/base';`
 -   Notice that we didn't need to add `_` before base and the extension. Sass compiler understands that we want to import the `_base.scss`
+
+<!-- = RESPONSIVE WEB DESIGN -->
+<h1 id='responsivedesign'>Responsive Web Design</h1>
+
+<h2 id='mobilefirst'>Mobile First</h2>
+
+[Go Back to Summary](#summary)
+
+-   Start writing CSS for mobile devices: small screen;
+-   Then, media queries expand design to a large desktop screen
+-   Forces us to reduce websites and apps to the absolute essentials
+
+    ```SCSS
+      html {
+          font-size: 16px
+      }
+
+      @media(min-width: 600px) {
+          html {
+            font-size: 20px;
+          }
+      }
+    ```
+
+<h2 id='mediaqueriessizes'>Media Queries Sizes</h2>
+
+[Go Back to Summary](#summary)
+
+-   `0 - 600px` phone
+-   `600 - 900px` tablet portrait
+-   `900 - 1200px` tablet landscape
+-   `1200 - 1800px` is where our nomal css apply
+-   `1800px +` big desktop
+
+-   **Mobile first** approach
+
+    ```Bash
+        |------------------|------------------|------------------|------------------>
+        0px               600px              900px             1200px               infinity
+
+                          |-------------------------------------------------------->|
+                            min-width: 600px;
+                            isWidth >= 600px ?
+                                              |------------------------------------->|
+                                                min-width: 900px;
+                                                isWidth >= 900px ?
+                                                        |--------------------------->|
+                                                          min-width: 1200px;
+                                                          isWidth >= 1200px ?
+
+          Minimum width at which media query still applies
+    ```
+
+-   **Desktop first** approach
+
+    ```Bash
+        |------------------|------------------|------------------|------------------>
+        0px               600px              900px             1200px               infinity
+
+        |----------------->|
+          max-width: 600px;
+          isWidth <= 600px ?
+        |------------------------------------>|
+                            max-width: 900px;
+                            isWidth <= 900px ?
+        |------------------------------------------------------->|
+                                              max-width: 1200px;
+                                              isWidth <= 1200px ?
+
+          Maximum width at which media query still applies
+    ```
+
+<h2 id='mediaquerysass'>Media Query With SASS</h2>
+
+[Go Back to Summary](#summary)
+
+-   to help with our media query, we can can create `mixin` to handle different screens sizes, and also have a centralized configuration file
+-   a good way to manage all the possible media query configurations, is to create a media query manager using `mixin`
+
+    -   we can create different breakpoints, to do so we need to use the `@if` statement
+
+-   To make our website responsive, we need to use `em` instead of `pixels`
+
+    -   We are using `em` bacuase `rem` doesn't work properly in all the browsers
+    -   `1em` equals to **16px**
+
+    |   em    |   px   |
+    | :-----: | :----: |
+    | 37.5em  | 600px  |
+    | 56.25em | 900px  |
+    |  75em   | 1200px |
+    | 112.5em | 1800px |
+
+-   in `_mixin.scss`
+
+    ```SCSS
+      /*
+          = MEDIA QUERY BREAKPOINS
+          + phone
+          + tab-port
+          + tab-land
+          + big-desk
+      */
+
+      @mixin mq-manager($breakpoint) {
+          @if $breakpoint == phone {
+              @media (max-width: 37.5em) {
+                  // 600px
+                  @content;
+              }
+          }
+          @if $breakpoint == tab-port {
+              @media (max-width: 56.25em) {
+                  // 900px
+                  @content;
+              }
+          }
+          @if $breakpoint == tab-land {
+              @media (max-width: 75em) {
+                  // 1200px
+                  @content;
+              }
+          }
+          @if $breakpoint == big-desk {
+              @media (max-width: 112.5em) {
+                  // 1800px
+                  @content;
+              }
+          }
+      }
+    ```
+
+-   in `_base.scss`
+
+    ```SCSS
+      html {
+          font-size: 62.5%; // 1rem = 10px; 10px/16px = 62.5%
+
+          @include mq-manager(big-desk) {
+              // width < 1800px ?
+              font-size: 75%; // 1rem = 12px, 12/16 = 75%
+          }
+          @include mq-manager(tab-land) {
+              // width < 1200px ?
+              font-size: 56.25%; // 1rem = 9px, 9/16 = 56.25%
+          }
+          @include mq-manager(tab-port) {
+              // width < 900px ?
+              font-size: 50%; // 1rem = 8px, 8/16 = 50%
+          }
+          @include mq-manager(phone) {
+              // width < 600px ?
+              font-size: 30%; // 1rem = 4.8px, 4.8/16 = 30%
+          }
+      }
+    ```

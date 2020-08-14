@@ -28,7 +28,7 @@
         backface-visibility: hidden;
     }
     &__caption {
-        @include centerHVABS(-50%, -20%);
+        @include center-abs-horizontal-vertical(-50%, -20%);
         color: $color-white;
         text-transform: uppercase;
         font-size: 1.7rem;

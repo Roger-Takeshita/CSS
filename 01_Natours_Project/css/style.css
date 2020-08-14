@@ -1,3 +1,10 @@
+/*
+    = MEDIA QUERY BREAKPOINS
+    + phone
+    + tab-port
+    + tab-land
+    + big-desk
+*/
 @-webkit-keyframes moveInLeft {
   0% {
     opacity: 0;
@@ -14,7 +21,6 @@
             transform: translate(0);
   }
 }
-
 @keyframes moveInLeft {
   0% {
     opacity: 0;
@@ -103,6 +109,30 @@
 
 html {
   font-size: 62.5%;
+}
+
+@media (max-width: 112.5em) {
+  html {
+    font-size: 75%;
+  }
+}
+
+@media (max-width: 75em) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media (max-width: 56.25em) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media (max-width: 37.5em) {
+  html {
+    font-size: 30%;
+  }
 }
 
 body {

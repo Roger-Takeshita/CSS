@@ -45,7 +45,7 @@
         visibility: hidden;
     }
     &__list {
-        @include centerHVABS;
+        @include center-abs-horizontal-vertical;
         list-style: none;
         text-align: center;
         width: 100%;

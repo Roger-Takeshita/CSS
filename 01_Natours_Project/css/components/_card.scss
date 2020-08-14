@@ -139,7 +139,7 @@
         }
     }
     &__cta {
-        @include centerHVABS;
+        @include center-abs-horizontal-vertical;
         width: 90%;
         text-align: center;
     }

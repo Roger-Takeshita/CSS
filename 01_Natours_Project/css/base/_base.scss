@@ -7,9 +7,24 @@
 }
 
 html {
-    //= Setting up the font-size of the project
-    //! We set to 10px so we can easily convert into REM
-    font-size: 62.5%;
+    font-size: 62.5%; // 1rem = 10px; 10px/16px = 62.5%
+
+    @include mq-manager(big-desk) {
+        // width < 1800px ?
+        font-size: 75%; // 1rem = 12px, 12/16 = 75%
+    }
+    @include mq-manager(tab-land) {
+        // width < 1200px ?
+        font-size: 56.25%; // 1rem = 9px, 9/16 = 56.25%
+    }
+    @include mq-manager(tab-port) {
+        // width < 900px ?
+        font-size: 50%; // 1rem = 8px, 8/16 = 50%
+    }
+    @include mq-manager(phone) {
+        // width < 600px ?
+        font-size: 30%; // 1rem = 4.8px, 4.8/16 = 30%
+    }
 }
 
 body {

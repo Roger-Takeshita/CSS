@@ -11,7 +11,7 @@
     visibility: hidden;
 
     &__content {
-        @include centerHVABS;
+        @include center-abs-horizontal-vertical;
         width: 75%;
         box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
         background-color: $color-white;
