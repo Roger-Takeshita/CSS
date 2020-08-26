@@ -17,17 +17,17 @@
         -   [Span Element](#spanelement)
         -   [Column Property](#columnproperty)
             -   [Hyphens](#hyphens)
-        -   [Selecting CSS Attributes](#selectingattributes)
         -   [-webkit-background-clip - Background Text Styling](#webkitbackgroundclip)
         -   [Outline vs Border](#outlinevsborder)
         -   [Figure Element](#figureelement)
             -   [Float](#float)
         -   [Filters](#filter)
-        -   [CSS Combinator](#csscombinator)
+        -   [Selector/Combinator](#csscombinator)
             -   [Descendent Selector](#descendantselector)
-            -   [Child Selector](#childselector)
-            -   [Adjacent Sibling Selector](#adjacentsiblingselector)
-            -   [General Sibling Selector](#generalsibligselector)
+            -   [> Direct Child Selector](#childselector)
+            -   [+ Adjacent Sibling Selector](#adjacentsiblingselector)
+            -   [~ General Sibling Selector](#generalsibligselector)
+            -   [[] Attribute Selector](#attributeselector)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -112,22 +112,22 @@
 
 -   another good practice is to define the default `font-size` of the project
 
-        -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
+    -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
 
-        ```SCSS
-          html {
-              font-size: 10px;
-          }
-        ```
+    ```SCSS
+      html {
+          font-size: 10px;
+      }
+    ```
 
-        -   We could also use in **%**, we just have to convert the `10px`.
-        -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
+    -   We could also use in **%**, we just have to convert the `10px`.
+    -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
 
-        ```SCSS
-          html {
-              font-size: 62.5%;
-          }
-        ```
+    ```SCSS
+      html {
+          font-size: 62.5%;
+      }
+    ```
 
 <h3 id='convertingpxtorem'>Converting Pixel to REM</h3>
 
@@ -454,146 +454,6 @@
     -   To `hyphens` make it work, we need to define the language of the page, inside of the `html` tag
         -   `<html lang="en">`
 
-<h3 id='selectingattributes'>Selecting CSS Attributes</h3>
-
-[Go Back to Summary](#summary)
-
--   Instead of creating a class so select a specific element(s)
--   we can select using `[class^="col-"]`
-
-    -   Where `class` is the they of attribute that we are targeting
-    -   `^=` select classes that starts with
-        -   `*=` select classes that contains anything equals
-        -   `$=` select classes that ends with
-    -   `"col-"` the name of the variable
-
--   another cool command is the **negation** (`:not()`)
-
-    ```SCSS
-      &:not(:last-child) {
-          margin-bottom: $gap-vertical;
-      }
-    ```
-
--   in `index.html`
-
-    ```HTML
-      <!DOCTYPE html>
-      <html lang="en">
-
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-          <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
-
-          <link rel="stylesheet" href="css/icon-font.css">
-          <link rel="stylesheet" href="css/style.css">
-          <link rel="shortcut icon" type="image/png" href="img/favicon.png">
-
-          <title>Custom Grid With Floats</title>
-      </head>
-
-      <body>
-          <section class="grid-test">
-              <div class="grid-test__row">
-                  <div class="col-1-of-2">Col 1 of 2</div>
-                  <div class="col-1-of-2">Col 1 of 2</div>
-              </div>
-              <div class="grid-test__row">
-                  <div class="col-1-of-3">Col 1 of 3</div>
-                  <div class="col-1-of-3">Col 1 of 3</div>
-                  <div class="col-1-of-3">Col 1 of 3</div>
-              </div>
-              <div class="grid-test__row">
-                  <div class="col-1-of-3">Col 1 of 3</div>
-                  <div class="col-2-of-3">Col 2 of 3</div>
-              </div>
-              <div class="grid-test__row">
-                  <div class="col-1-of-4">Col 1 of 4</div>
-                  <div class="col-1-of-4">Col 1 of 4</div>
-                  <div class="col-1-of-4">Col 1 of 4</div>
-                  <div class="col-1-of-4">Col 1 of 4</div>
-              </div>
-              <div class="grid-test__row">
-                  <div class="col-1-of-4">Col 1 of 4</div>
-                  <div class="col-1-of-4">Col 1 of 4</div>
-                  <div class="col-2-of-4">Col 2 of 4</div>
-              </div>
-              <div class="grid-test__row">
-                  <div class="col-1-of-4">Col 1 of 4</div>
-                  <div class="col-3-of-4">Col 3 of 4</div>
-              </div>
-          </section>
-      </body>
-
-      </html>
-    ```
-
--   in `style.scss`
-
-    ```SCSS
-      .grid-test {
-          &__row {
-              max-width: $grid-width;
-              background-color: #eee;
-              margin: 0 auto;
-
-              &:not(:last-child) {
-                  margin-bottom: $gap-vertical;
-              }
-
-              @include clearfix;
-
-              [class^='col-'] {
-                  background-color: orangered;
-                  float: left;
-                  text-align: center;
-                  color: $color-white;
-                  height: 5rem;
-                  font-size: 2rem;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-
-                  &:not(:last-child) {
-                      margin-right: $gap-horizontal;
-                  }
-              }
-
-              .col-1-of-2 {
-                  width: calc((100% - #{$gap-horizontal}) / 2);
-              }
-
-              .col-1-of-3 {
-                  width: calc((100% - 2 * #{$gap-horizontal}) / 3);
-              }
-
-              .col-2-of-3 {
-                  width: calc(
-                      (2 * ((100% - 2 * #{$gap-horizontal})) / 3) + #{$gap-horizontal}
-                  );
-              }
-
-              .col-1-of-4 {
-                  width: calc((100% - 3 * #{$gap-horizontal}) / 4);
-              }
-
-              .col-2-of-4 {
-                  width: calc(
-                      (2 * ((100% - 3 * #{$gap-horizontal})) / 4) + #{$gap-horizontal}
-                  );
-              }
-
-              .col-3-of-4 {
-                  width: calc(
-                      (3 * ((100% - 3 * #{$gap-horizontal})) / 4) + 2 * #{$gap-horizontal}
-                  );
-              }
-          }
-      }
-    ```
-
 <h3 id='webkitbackgroundclip'>-webkit-background-clip - Background Text Styling</h3>
 
 [Go Back to Summary](#summary)
@@ -754,7 +614,7 @@
       filter: contrast(175%) brightness(3%);
     ```
 
-<h3 id='csscombinator'>CSS Combinator</h3>
+<h3 id='csscombinator'>Selector/Combinator</h3>
 
 [Go Back to Summary](#summary)
 
@@ -925,46 +785,363 @@
 
 <h4 id='descendantselector'>Descendent Selector</h4>
 
--   The descendant selector matches all elements that are descendants of a specified element.
--   The following example selects all `<p>` elements inside `<div>` elements:
+-   The descendant selector matches **all elements** that are **descendants** of a specified element.
+
+    ```SCSS
+      .descendant p {
+        background-color: yellow;
+      }
+      // Will match all <p> inside the <div>
+    ```
+
+    ```HTML
+      <div class="descendant">
+          <p> This text is yellow</p>
+          <div class="random-class-1">
+              <p> This text is yellow</p>
+              <div class="random-class-2">
+                  <p> This text is yellow</p>
+              </div>
+          </div>
+      </div>
+    ```
+
+<h4 id='childselector'>> Direct Child Selector</h4>
+
+-   The child selector selects all elements that are the **direct child** of a specified element.
 
     ```CSS
-      div p {
+      .direct-child > p {
         background-color: yellow;
       }
     ```
 
-<h4 id='childselector'>Child Selector</h4>
-
--   The child selector selects all elements that are the children of a specified element.
--   The following example selects all `<p>` elements that are children of a `<div>` element:
-
-    ```CSS
-      div > p {
-        background-color: yellow;
-      }
+    ```HTML
+      <div class="direct-child">
+          <p> This text is yellow</p>
+          <div class="random-class-1">
+              <p> This text is NOT yellow</p>
+              <div class="random-class-2">
+                  <p> This text is NOT yellow</p>
+              </div>
+          </div>
+          <p> This text is yellow</p>
+      </div>
     ```
 
-<h4 id='adjacentsiblingselector'>Adjacent Sibling Selector</h4>
+<h4 id='adjacentsiblingselector'>+ Adjacent Sibling Selector</h4>
 
 -   The adjacent sibling selector selects all elements that are the adjacent siblings of a specified element.
--   Sibling elements must have the same parent element, and "adjacent" means "immediately following".
--   The following example selects all `<p>` elements that are placed immediately after `<div>` elements:
+-   Sibling elements must have the same parent element, and **adjacent** means **immediately following**.
+
+    -   It looks for sibiling that comes before, that's why the first box is white, because it doesn't have a sibling before with the class `.box`
 
     ```CSS
-      div + p {
-        background-color: yellow;
+      .adjacent-sibling {
+          display: flex;
+      }
+
+      .box {
+          height: 60px;
+          width: 60px;
+          margin: 10px;
+          border: 2px solid black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .adjacent-sibling .box + .box {
+          background-color: yellow;
       }
     ```
 
-<h4 id='generalsibligselector'>General Sibling Selector</h4>
+    ```HTML
+      <div class="adjacent-sibling">
+          <div class="box">White</div>
+          <div class="box">Yellow</div>
+          <div class="box">Yellow</div>
+          <div class="box">Yellow</div>
+      </div>
+    ```
+
+    ```HTML
+      <div class="adjacent-sibling">
+          <div class="box">White</div>
+          <div class="box">Yellow</div>
+          <div class="something-else">Something else</div>
+          <div class="box">white</div>
+          <div class="box">Yellow</div>
+      </div>
+    ```
+
+<h4 id='generalsibligselector'>~ General Sibling Selector</h4>
 
 -   The general sibling selector selects all elements that are siblings of a specified element.
--   The following example selects all `<p>` elements that are siblings of `<div>` elements:
+-   It works similar to **adjacent sibling**, It looks for sibiling that comes before, that's why the first box is white, because it doesn't have a sibling before with the class `.box`, but with **general sibling** anything before has to be the selector
 
     ```CSS
-      div ~ p {
-        background-color: yellow;
+      .general-sibling {
+          display: flex;
+      }
+
+      .box {
+          height: 60px;
+          width: 60px;
+          margin: 10px;
+          border: 2px solid black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .general-sibling .box ~ .box {
+          background-color: yellow;
+      }
+    ```
+
+    ```HTML
+      <div class="general-sibling">
+          <div class="box">White</div>
+          <div class="box">Yellow</div>
+          <div class="something-else">Something else</div>
+          <div class="box">Yellow</div>
+          <div class="box">Yellow</div>
+      </div>
+    ```
+
+<h4 id='attributeselector'>[] Attribute Selector</h4>
+
+```HTML
+  <div class="attributes">
+      <a href="https://www.google.com" class="link-one">Google</a>
+      <a href="https://www.google.ca" class="link-two">Google Canada</a>
+      <a href="about.html" class="link-three">About Page</a>
+      <a href="http://rogertakeshita.com" class="link-four" target="_blank">Roger</a>
+      <a href="ebook.pdf" class="link-five">PDF File</a>
+      <a href="#" class="another-link">Another Link</a>
+  </div>
+```
+
+-   **Targeting an Attribute**
+
+    -   in this case we are selecing anthing that has the attribute `target`
+
+    ```SCSS
+      [target] {
+          color: pink;
+      }
+    ```
+
+    -   now we are more specific selecting all `<a>` that have an attribute `target`
+
+    ```SCSS
+      a[target] {
+          color: pink;
+      }
+    ```
+
+-   **Targeting an Attribute Equal to Something =**
+
+    -   even more specific, all `<a>` that have an attribute `target` equals to `_blank`
+    -   The right part (`_blank`) has to be a **exactly match**
+
+    ```SCSS
+      a[target="_blank"] {
+          color: pink;
+      }
+
+      a[href="about.html"] {
+          color: red;
+      }
+    ```
+
+-   **Targeting an Attribute That Has Somehing Equal To |**
+
+    -   It will look after an attribute that starts with what we have, **separatated by -**
+
+    ```SCSS
+      a[class|='another'] {
+          color: purple;
+      }
+
+      a[class|='link'] {
+          color: green;
+      }
+
+      // This won't work
+      a[class|='anotherLink'] {
+          color: purple;
+      }
+    ```
+
+-   **Targeting an Attribute Beginning With ^**
+
+    ```SCSS
+      a[href^='http'] {
+          color: orange;
+      }
+    ```
+
+-   **Targeting an Attribute That Has Anthhing Equals To \***
+
+    -   It will target anthing that has `google`, it doesn't matter if it's in the beginning or in the end
+
+    ```SCSS
+      a[href*='google'] {
+          color: orange;
+      }
+    ```
+
+-   **Targeting an Attribute Ending With \$**
+
+    ```SCSS
+      a[href$='.ca'] {
+          color: blue;
+      }
+    ```
+
+    -   We could add an image `after` external links
+
+    ```SCSS
+      a[target$='_blank']::after {
+          content: url('../../your_img.png');
+      }
+    ```
+
+-   Instead of creating a class so select a specific element(s)
+-   we can select using `[class^="col-"]`
+
+    -   Where `class` is the they of attribute that we are targeting
+    -   `^=` select classes that starts with
+        -   `*=` select classes that contains anything equals
+        -   `$=` select classes that ends with
+    -   `"col-"` the name of the variable
+
+-   another cool command is the **negation** (`:not()`)
+
+    ```SCSS
+      &:not(:last-child) {
+          margin-bottom: $gap-vertical;
+      }
+    ```
+
+-   in `index.html`
+
+    ```HTML
+      <!DOCTYPE html>
+      <html lang="en">
+
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+          <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+
+          <link rel="stylesheet" href="css/icon-font.css">
+          <link rel="stylesheet" href="css/style.css">
+          <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+          <title>Custom Grid With Floats</title>
+      </head>
+
+      <body>
+          <section class="grid-test">
+              <div class="grid-test__row">
+                  <div class="col-1-of-2">Col 1 of 2</div>
+                  <div class="col-1-of-2">Col 1 of 2</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-3">Col 1 of 3</div>
+                  <div class="col-1-of-3">Col 1 of 3</div>
+                  <div class="col-1-of-3">Col 1 of 3</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-3">Col 1 of 3</div>
+                  <div class="col-2-of-3">Col 2 of 3</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-2-of-4">Col 2 of 4</div>
+              </div>
+              <div class="grid-test__row">
+                  <div class="col-1-of-4">Col 1 of 4</div>
+                  <div class="col-3-of-4">Col 3 of 4</div>
+              </div>
+          </section>
+      </body>
+
+      </html>
+    ```
+
+-   in `style.scss`
+
+    ```SCSS
+      .grid-test {
+          &__row {
+              max-width: $grid-width;
+              background-color: #eee;
+              margin: 0 auto;
+
+              &:not(:last-child) {
+                  margin-bottom: $gap-vertical;
+              }
+
+              @include clearfix;
+
+              [class^='col-'] {
+                  background-color: orangered;
+                  float: left;
+                  text-align: center;
+                  color: $color-white;
+                  height: 5rem;
+                  font-size: 2rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
+                  &:not(:last-child) {
+                      margin-right: $gap-horizontal;
+                  }
+              }
+
+              .col-1-of-2 {
+                  width: calc((100% - #{$gap-horizontal}) / 2);
+              }
+
+              .col-1-of-3 {
+                  width: calc((100% - 2 * #{$gap-horizontal}) / 3);
+              }
+
+              .col-2-of-3 {
+                  width: calc(
+                      (2 * ((100% - 2 * #{$gap-horizontal})) / 3) + #{$gap-horizontal}
+                  );
+              }
+
+              .col-1-of-4 {
+                  width: calc((100% - 3 * #{$gap-horizontal}) / 4);
+              }
+
+              .col-2-of-4 {
+                  width: calc(
+                      (2 * ((100% - 3 * #{$gap-horizontal})) / 4) + #{$gap-horizontal}
+                  );
+              }
+
+              .col-3-of-4 {
+                  width: calc(
+                      (3 * ((100% - 3 * #{$gap-horizontal})) / 4) + 2 * #{$gap-horizontal}
+                  );
+              }
+          }
       }
     ```
 
@@ -2121,7 +2298,6 @@
 
 -   `@extend` basically we can extend/inherit any style from any element
 -   We can create a **placeholder** to hold certain styles
-
 
     ```SCSS
       %btn-palcehodler {
