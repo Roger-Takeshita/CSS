@@ -28,6 +28,9 @@
             -   [+ Adjacent Sibling Selector](#adjacentsiblingselector)
             -   [~ General Sibling Selector](#generalsibligselector)
             -   [[] Attribute Selector](#attributeselector)
+        -   [Responsive Images](#responsiveimages)
+            -   [Density Switching](#densityswitching)
+            -   [Art Direction](#artdirection)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -1144,6 +1147,34 @@
           }
       }
     ```
+
+<h3 id='responsiveimages'>Responsive Images</h3>
+
+[Go Back to Summary](#summary)
+
+<h4 id='densityswitching'>Density Switching</h4>
+
+-   On our html we can define two types of images for low density screens (`1x`) and high density screens (`2x`)
+-   We can do using the `srcset` atribute
+
+    ```HTML
+      <img srcset="img/logo-green-2x.png 1x, img/logo-green-2x.png 2x" alt="Full logo" class="footer__logo">
+    ```
+
+<h4 id='artdirection'>Art Direction</h4>
+
+-   It's to use different images depending on the size of the viewport
+
+    ```HTML
+      <picture class="footer__logo">
+          <source srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
+              media="(max-width: 37.5rem)">
+          <img srcset="img/logo-green-2x.png 1x, img/logo-green-2x.png 2x" alt="Full logo">
+      </picture>
+    ```
+
+    -   basicallly we tell the browser to use `srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"` if the browser is less than 37.rem (600px) `media="(max-width: 37.5rem)"`
+    -   otherwise, use `<img srcset="img/logo-green-2x.png 1x, img/logo-green-2x.png 2x" alt="Full logo">`
 
 <!-- _ ANIMATION -->
 <h2 id='animation'>Animation</h2>

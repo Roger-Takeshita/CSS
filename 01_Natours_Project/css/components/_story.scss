@@ -10,6 +10,14 @@
     transform: skewX(-12deg);
     position: relative;
 
+    @include mq-manager(tab-port) {
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+    @include mq-manager(phone) {
+        transform: skewX(0);
+    }
     &__shape {
         width: 15rem;
         height: 15rem;
@@ -20,6 +28,10 @@
         clip-path: circle(50% at 50% 50%);
         transform: translateX(-3rem) skewX(12deg);
         overflow: hidden;
+
+        @include mq-manager(phone) {
+            transform: translateX(-3rem) skewX(0);
+        }
     }
     &__img {
         height: 100%;
@@ -47,5 +59,9 @@
     }
     &__text {
         transform: skewX(12deg);
+
+        @include mq-manager(phone) {
+            transform: skewX(0);
+        }
     }
 }

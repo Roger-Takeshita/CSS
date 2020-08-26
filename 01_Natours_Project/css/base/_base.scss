@@ -30,4 +30,9 @@ html {
 body {
     //- the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
     box-sizing: border-box;
+    padding: 3rem;
+
+    @include mq-manager(tab-port) {
+        padding: 0;
+    }
 }

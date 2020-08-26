@@ -3,9 +3,17 @@
     background-color: $color-grey-dark-3;
     padding: 10rem 0;
 
+    @include mq-manager(tab-port) {
+        padding: 8rem 0;
+    }
+
     &__logo-box {
         text-align: center;
         margin-bottom: 8rem;
+
+        @include mq-manager(tab-port) {
+            margin-bottom: 6rem;
+        }
     }
     &__logo {
         width: 15rem;
@@ -15,6 +23,11 @@
         border-top: 0.1rem solid $color-gray-dark-1;
         padding-top: 2rem;
         display: inline-block;
+
+        @include mq-manager(tab-port) {
+            width: 100%;
+            text-align: center;
+        }
     }
     &__list {
         list-style: none;
@@ -47,5 +60,10 @@
         width: 80%;
         float: right;
         font-size: 1.4rem;
+
+        @include mq-manager(tab-port) {
+            width: 100%;
+            float: none;
+        }
     }
 }
