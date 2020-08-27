@@ -2,7 +2,7 @@
 
 -   [CSS](#css)
     -   [Basics](#cssbasics)
-        -   [Reset Project](#resetproject)
+        -   [Box-Sizing - Reset Project](#resetproject)
             -   [Body Element](#bodyelement)
             -   [HTML Element](#htmlelement)
         -   [Converting Pixel to REM](#convertingpxtorem)
@@ -64,23 +64,19 @@
 <!-- _ CSS BASICS -->
 <h2 id='cssbasics'>Basics</h2>
 
-<h3 id='resetproject'>Reset Project</h3>
+<h3 id='resetproject'>Box-Sizing - Reset Project</h3>
 
 [Go Back to Summary](#summary)
 
+-   [box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)
+-   [box-sizing: border-box explained](https://www.youtube.com/watch?v=WlGQdgy-M6w)
 -   Before start styling our website, a good practice is to reset all the browser parameters. Each browser has different parameters and we want to display our website the same way in all browsers.
 
-    -   the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
-
-    ```CSS
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-      }
-    ```
-
--   a good practice instead of just selecting the all elements (`*`), we can select the `::before` and `::after` pseudo elements, and define the reset parameters
+    -   By default in the `CSS box model`, the `width` and `height` you assign to an element is applied only to the element's content box. If the element has any border or padding, this is then added to the `width` and `height` to arrive at the size of the box that's rendered on the screen. This means that when you set `width` and `height`, you have to adjust the value you give to allow for any border or padding that may be added.
+        -   **content-box** gives you the default CSS box-sizing behavior. If you set an element's width to 100 pixels, then the element's content box will be 100 pixels wide, and the width of any border or padding will be added to the final rendered width, making the element wider than 100px.
+        -   **border-box** tells the browser to account for any border and padding in the values you specify for an element's width and height. If you set an element's width to 100 pixels, that 100 pixels will include any border or padding you added, and the content box will shrink to absorb that extra width. This typically makes it much easier to size elements.
+    -   the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total `width` or total `height` of the element
+    -   a good practice instead of just selecting the all elements (`*`), we can select the `::before` and `::after` pseudo elements, and define the reset parameters
 
     ```SCSS
       *,
@@ -90,14 +86,15 @@
           padding: 0;
           box-sizing: inherit;
       }
+
+      html {
+          box-sizing: border-box;
+      }
     ```
 
 <h4 id='bodyelement'>Body Element</h4>
 
--   and then inside of the `body` element, we define the `box-sizing: border-box;`
-
-    -   the `box-sizing: border-box;` removes the box margin and padding to not be considered in the total width or total height of the element
-    -   in the `body` we can define the `font-family`, instead of the generic `*`
+-   in the `body` we can define the `font-family`, instead of the generic `*`
 
     ```SCSS
       body {
@@ -107,7 +104,6 @@
           line-height: 1.7;
           color: #777;
           padding: 3rem;
-          box-sizing: border-box;
       }
     ```
 
@@ -119,6 +115,7 @@
 
     ```SCSS
       html {
+          box-sizing: border-box;
           font-size: 10px;
       }
     ```
@@ -128,6 +125,7 @@
 
     ```SCSS
       html {
+          box-sizing: border-box;
           font-size: 62.5%;
       }
     ```
