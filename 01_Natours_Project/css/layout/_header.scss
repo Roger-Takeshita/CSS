@@ -7,7 +7,18 @@
             rgba($color-primary-light, 0.8),
             rgba($color-primary-dark, 0.8)
         ),
-        url('../img/hero.jpg');
+        url('../img/hero-small.jpg');
+
+    @media (min-resolution: 192dpi) and (min-width: 600px),
+        (-webkit-min-device-pixel-ratio: 2) and (min-width: 600px),
+        (min-width: 2000px) {
+        background-image: linear-gradient(
+                to right bottom,
+                rgba($color-primary-light, 0.8),
+                rgba($color-primary-dark, 0.8)
+            ),
+            url('../img/hero.jpg');
+    }
 
     //- background-size: cover tries to fit the image inside the box to use the whole available width. it will shrink the image until hit the height of the image
     background-size: cover;

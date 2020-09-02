@@ -1,10 +1,12 @@
 <h1 id='summary'>Summary</h1>
 
+-   [Links](#links)
 -   [CSS](#css)
     -   [Basics](#cssbasics)
         -   [Box-Sizing - Reset Project](#resetproject)
             -   [Body Element](#bodyelement)
             -   [HTML Element](#htmlelement)
+        -   [@supports](#supports)
         -   [Converting Pixel to REM](#convertingpxtorem)
     -   [Styling](#styling)
         -   [Background Image](#addingbgimage)
@@ -57,6 +59,18 @@
     -   [Mobile First](#mobilefirst)
     -   [Media Queries Sizes](#mediaqueriessizes)
     -   [Media Query With SASS](#mediaquerysass)
+
+<!-- = LINKS -->
+<h1 id='links'>Links</h1>
+
+[Go Back to Summary](#summary)
+
+-   [Can I Use?](https://caniuse.com/)
+-   [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+-   [Grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+-   [Cursor](https://www.w3schools.com/cssref/playit.asp?filename=playcss_cursor&preval=cell)
+-   [cubic-bezier](https://cubic-bezier.com/#.17,.67,.83,.67)
+-   [Easing Functions](https://easings.net/)
 
 <!-- = CSS -->
 <h1 id='css'>CSS</h1>
@@ -129,6 +143,24 @@
           font-size: 62.5%;
       }
     ```
+
+<h3 id='supports'>@supports - Media Query</h3>
+
+[Go Back to Summary](#summary)
+
+-   [Can I Use?](https://caniuse.com/)
+-   The `@supports` checks if the browser supports certain feature, this might be handy if certain feature is not supported by a certain browser
+-   For example the `backdrop-filter` is not supported by Internet Explorer and Firefox (needs to be enabled by the user in the Firefox config - not enabled by default)
+    -   [backdrop-filer compatibility](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)
+
+```SCSS
+  @supports ((-webkit-backdrop-filter: blur(10px)) or(backdrop-filter: blur(10px);
+  )) {
+      // -webkit-backdrop-filter: blur(10px); // Add support for Safari
+      backdrop-filter: blur(10px); // Other browser Chrome, Edge
+      background-color: rgba($color-black, 0.3);
+  }
+```
 
 <h3 id='convertingpxtorem'>Converting Pixel to REM</h3>
 
@@ -1161,18 +1193,69 @@
 
 <h4 id='artdirection'>Art Direction</h4>
 
--   It's to use different images depending on the size of the viewport
+-   It's to use different images depending on the size of the viewport, we can force using `<picture>` with the condition `<source>` where we can specify the media query break point.
 
     ```HTML
       <picture class="footer__logo">
           <source srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
               media="(max-width: 37.5rem)">
-          <img srcset="img/logo-green-2x.png 1x, img/logo-green-2x.png 2x" alt="Full logo">
+          <img
+              srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
+              alt="Full logo"
+              src="img/logo-green-2x.png"
+          >
       </picture>
     ```
 
     -   basicallly we tell the browser to use `srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"` if the browser is less than 37.rem (600px) `media="(max-width: 37.5rem)"`
     -   otherwise, use `<img srcset="img/logo-green-2x.png 1x, img/logo-green-2x.png 2x" alt="Full logo">`
+    -   `src="img/nat-1-large.jpg"` in the end we add the source of the image, just in case the user is using an older browser and doesn't support `srcset` and `sizes` (newer attributes)
+
+<h4 id='resolutionswitching'>Resolution Switching</h4>
+
+-   Unlike **art direction** that **forces the browser to use a certain image according to a midia query**, the **resolution switching** uses the viewport and the pixel density to choose the best image
+-   Just like the density switching we are going to use `srcset` with the help of the width descriptor (instead of the density descriptor (`1x`, `2x`))
+
+    ```HTML
+        <img srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
+             sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
+             alt="Photo 1"
+             class="composition__photo composition__photo--p1"
+             src="img/nat-1-large.jpg"
+        >
+    ```
+
+    -   `900px/16px = 56.25em`
+    -   `600px/16px = 37.5em`
+    -   `srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"` we define the actual image width size
+    -   `sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"` the we have to inform the browser what is the corresponding **image** size for the `viewport` at `56.25em`
+        -   We basically divided the `desired final size/view port`, in other words, `171px/900px ≈ 0.2`
+        -   We add as many break points that we need, and in the end we add the default size (`300px`)
+    -   `src="img/nat-1-large.jpg"` in the end we add the source of the image, just in case the user is using an older browser and doesn't support `srcset` and `sizes` (newer attributes)
+
+<h4 id='highresolutionscreen'>High Resolution Screen</h4>
+
+-   we can target high resolution screen using `min-resolution` and set to `192dpi` (this is the standard value)
+    -   Safari doesn't support `min-resolution`, we need to change it to `-webkit-min-device-pixel-ratio: 2` (the 2 is the pixel density)
+-   and also we can **combine** with other attributes with **and**
+-   or we can and **or** using a **comma**
+-   in this case we want to user a high resolution image with a high resolution screen bigger than a phone screen
+
+    -   `600px/16px = 37.5em`
+    -   `2000px/16px = 125em`
+
+    ```CSS
+      @media (min-resolution: 192dpi) and (min-width: 37.5em),
+             (-webkit-min-device-pixel-ratio: 2) and (min-width: 600px),
+             (min-width: 125em) {
+          background-image: linear-gradient(
+                  to right bottom,
+                  rgba($color-secondary-light, 0.8),
+                  rgba($color-secondary-dark, 0.8)
+              ),
+              url('../img/hero.jpg');
+      }
+    ```
 
 <!-- _ ANIMATION -->
 <h2 id='animation'>Animation</h2>
