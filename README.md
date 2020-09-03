@@ -1,3 +1,4 @@
+<!-- // ~> SUMMARY -->
 <h1 id='summary'>Summary</h1>
 
 -   [Links](#links)
@@ -33,6 +34,7 @@
         -   [Responsive Images](#responsiveimages)
             -   [Density Switching](#densityswitching)
             -   [Art Direction](#artdirection)
+        -   [Flexbox](#flexbox)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -60,7 +62,7 @@
     -   [Media Queries Sizes](#mediaqueriessizes)
     -   [Media Query With SASS](#mediaquerysass)
 
-<!-- = LINKS -->
+<!-- // ~> LINKS -->
 <h1 id='links'>Links</h1>
 
 [Go Back to Summary](#summary)
@@ -72,10 +74,10 @@
 -   [cubic-bezier](https://cubic-bezier.com/#.17,.67,.83,.67)
 -   [Easing Functions](https://easings.net/)
 
-<!-- = CSS -->
+<!-- // ~> CSS -->
 <h1 id='css'>CSS</h1>
 
-<!-- _ CSS BASICS -->
+<!-- // ~~> BASICS -->
 <h2 id='cssbasics'>Basics</h2>
 
 <h3 id='resetproject'>Box-Sizing - Reset Project</h3>
@@ -175,7 +177,7 @@
     | 16px |   1 rem    |
     | 17px | 1.0625 rem |
 
-<!-- _ CSS STYLING -->
+<!-- // ~~> STYLING -->
 <h2 id='styling'>Styling</h2>
 
 <h3 id='addingbgimage'>Background Image</h3>
@@ -1257,7 +1259,32 @@
       }
     ```
 
-<!-- _ ANIMATION -->
+<h3 id='flexbox'>Flexbox</h3>
+
+[Go Back to Summary](#summary)
+
+-   **Container**
+
+    -   `flex-direction: row` | row-reverse | column | column-reverse
+    -   `flex-wrap: nowrap` | wrap | wrap-reverse
+    -   `justify-content: flex-start` | flex-end | center | space-between | space-around | space-evenly
+    -   `align-items: stretch` | flex-start | flex-end | center | baseline
+    -   `align-content: stretch` | flex-start | flex-end | center | space-between | space-around
+
+-   **Item**
+    -   `align-self: auto` | strech | flex-start | flex-end | center | baseline
+        -   Overwrites the property (`align-items`) for an individual element
+    -   `order: 0` <integer>
+        -   Sets the order from a **negative number** (first) to **positive number** (end)
+    -   `flex-grow: 0` <integer>
+        -   Sets the size of the element compared to other flex-grow, we could set one element to grow 2x the compared to the others
+    -   `flex-shrink: 1` <integer>
+        -   Sets to shrink the element compared to the size of its container, if we set to **0** it won't shrink
+    -   `flex-basis: auto` <length>
+        -   Sets the size of an element compared to the size of its container, we can use in **%** or **pixel**
+    -   Shorthand for `flex-grow flex-shrink flex-basis`, we can simply use `flex: 0 1 auto`
+
+<!-- // ~~> ANIMATION -->
 <h2 id='animation'>Animation</h2>
 
 <h3 id='keyframes'>@keyframes</h3>
@@ -1817,7 +1844,7 @@
       }
     ```
 
-<!-- _ POPUP -->
+<!-- // ~~> POPUP -->
 <h2 id='popup'>Popup</h2>
 
 [Go Back to Summary](#summary)
@@ -1940,7 +1967,7 @@
 
 -   in CSS we have a `:target` pseudo class, that activates when the element is on focus using the anchor tag `<a href="#popup">`
 
-<!-- = BEM (Block Element Modifier) -->
+<!-- // ~> BEM (Block Element Modifier) -->
 <h1 id='bem'>BEM (Block Element Modifier) Methodology</h1>
 
 [Go Back to Summary](#summary)
@@ -2146,7 +2173,7 @@
       }
     ```
 
-<!-- = SASS -->
+<!-- // ~> SASS -->
 <h1 id='sass'>Sass</h1>
 
 [Go Back to Summary](#summary)
@@ -2161,9 +2188,8 @@
     -   **Extends**: to make different selectors inherit declarations that are common to all of them
     -   **Control Directives**: for writing complex code using conditionals and loops
 
-<!-- _ SASS VARIABLE -->
+<!-- // ~~> SASS VARIABLE -->
 <h2 id='sassvariables'>Sass Variables and Nesting</h2>
-
 [Go Back to Summary](#summary)
 
 -   [Final Page Link](https://codepen.io/roger-takeshita/pen/zYqvRXw?editors=1100)
@@ -2273,7 +2299,7 @@
           }
         ```
 
-<!-- _ SASS MIXIN -->
+<!-- // ~~> SASS MIXIN -->
 <h2 id='sassmixin'>Sass Mixin</h2>
 
 [Go Back to Summary](#summary)
@@ -2381,7 +2407,7 @@
       }
     ```
 
-<!-- _ SASS FUNCTIONS -->
+<!-- // ~~> SASS FUNCTIONS -->
 <h2 id='sassfunctions'>Sass Functions</h2>
 
 [Go Back to Summary](#summary)
@@ -2404,7 +2430,7 @@
       }
     ```
 
-<!-- _ SASS EXTEND -->
+<!-- // ~~> SASS EXTEND -->
 <h2 id='sassextend'>Sass Extend</h2>
 [Go Back to Summary](#summary)
 
@@ -2442,7 +2468,8 @@
 -   The difference between creating a **placeholder** and **mixin**
     -   We only use **placeholder** if the elements are the same
 
-<!-- _ SASS PARTIALS -->
+// ~~> SASS PARTIALS
+
 <h2 id='sasspartials'>Sass Partials</h2>
 
 [Go Back to Summary](#summary)
@@ -2457,7 +2484,7 @@
 -   To import a partial we just need to use the `@import` and then specify the path to the file `@import 'base/base';`
 -   Notice that we didn't need to add `_` before base and the extension. Sass compiler understands that we want to import the `_base.scss`
 
-<!-- = RESPONSIVE WEB DESIGN -->
+<!-- // ~> RESPONSIVE WEB DESIGN -->
 <h1 id='responsivedesign'>Responsive Web Design</h1>
 
 <h2 id='mobilefirst'>Mobile First</h2>
