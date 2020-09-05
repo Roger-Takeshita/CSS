@@ -38,6 +38,7 @@
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
+            -   [Multiple Transitions](#multipletransitions)
             -   [Pseudo Classes](#pseudoclasses)
             -   [Pseudo Elements](#pseudoelements)
             -   [Chaining Pseudo Classes - Validation](#chainingpsudeoclasses)
@@ -1413,6 +1414,116 @@
 
 -   in this case we used `:hover` and added a `transform: translateY(-3px);` to do simply animation to move the button up
 -   and once it clicked `:active`, we animate again to `transform: translateY(-1px);`
+
+<h4 id='multipletransitions'>Multiple Transitions</h4>
+
+-   We could create cool animations using the `::before` pseudo element
+
+    -   we can set differnt times for different properties
+
+    ```SCSS
+      transition: transform 0.2s,
+                  width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+                  background-color 0.1s;
+    ```
+
+    -   In this case we are the `transform 0.2s` this is responsible to change the `scaleY()` that initially is set to **0**, and then when we hover, it changes to `scaleY(1)` in `0.2s`
+    -   the second property we have `width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s` where we initially we have width of `3px`, then when we hover we change to **100%** in `0.4s` using the speed of `cubic-bezier` with a delay of `0.2s` before starting the animation
+    -   for last we have `background-color 0.1s` where when we click, the the `::before` pseudo element, changes the color to brighter color in `0.1s`
+
+    ```HTML
+      <nav class="sidebar">
+          <ul class="side-nav">
+              <li class="side-nav__item side-nav__item--active">
+                  <a href="#" class="side-nav__link">
+                      <svg class="side-nav__icon">
+                          <use xlink:href="img/sprite.svg#icon-home"></use>
+                      </svg>
+                      <span>Hotel</span>
+                  </a>
+              </li>
+              <li class="side-nav__item">
+                  <a href="#" class="side-nav__link">
+                      <svg class="side-nav__icon">
+                          <use xlink:href="img/sprite.svg#icon-aircraft-take-off"></use>
+                      </svg>
+                      <span>Flight</span>
+                  </a>
+              </li>
+              <li class="side-nav__item">
+                  <a href="#" class="side-nav__link">
+                      <svg class="side-nav__icon">
+                          <use xlink:href="img/sprite.svg#icon-home"></use>
+                      </svg>
+                      <span>Car Rental</span>
+                  </a>
+              </li>
+              <li class="side-nav__item">
+                  <a href="#" class="side-nav__link">
+                      <svg class="side-nav__icon">
+                          <use xlink:href="img/sprite.svg#icon-map"></use>
+                      </svg>
+                      <span>Tours</span>
+                  </a>
+              </li>
+          </ul>
+          <div class="legal">
+              &copy; 2017 by trillo. All rights reserved.
+          </div>
+      </nav>
+    ```
+
+    ```SCSS
+      .side-nav {
+          font-size: 1.4rem;
+          list-style: none;
+          margin-top: 3.5rem;
+
+          &__item {
+              position: relative;
+
+              &::before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  height: 100%;
+                  background-color: var(--color-primary);
+                  transform: scaleY(0);
+                  width: 3px;
+                  transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+                      background-color 0.1s;
+              }
+              &:not(:last-child) {
+                  margin-bottom: 0.5rem;
+              }
+              &--active::before,
+              &:hover::before {
+                  transform: scaleY(1);
+                  width: 100%;
+              }
+              &:active::before {
+                  background-color: var(--color-primary-light);
+              }
+          }
+          &__link {
+              color: var(--color-grey-light-1);
+              text-decoration: none;
+              display: block;
+              padding: 1.5rem 3rem;
+              position: relative;
+              z-index: 2;
+          }
+          &__icon {
+              width: 1.75rem;
+              height: 1.75rem;
+              margin-right: 2rem;
+              fill: currentColor;
+          }
+      }
+    ```
+
+    -   **OBS** the `z-index` only works if we have a `positon` set to the item
 
 <h4 id='pseudoclasses'>Pseudo Classes</h4>
 
