@@ -81,6 +81,7 @@
 <!-- // ~~> BASICS -->
 <h2 id='cssbasics'>Basics</h2>
 
+<!-- // ~~~> Box-Sizing -->
 <h3 id='resetproject'>Box-Sizing - Reset Project</h3>
 
 [Go Back to Summary](#summary)
@@ -128,25 +129,26 @@
 
 -   another good practice is to define the default `font-size` of the project
 
-    -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
+        -   To do so, we define in the `html` tag, and we set to `10px` so we can easily convert into REM
 
-    ```SCSS
-      html {
-          box-sizing: border-box;
-          font-size: 10px;
-      }
-    ```
+        ```SCSS
+          html {
+              box-sizing: border-box;
+              font-size: 10px;
+          }
+        ```
 
-    -   We could also use in **%**, we just have to convert the `10px`.
-    -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
+        -   We could also use in **%**, we just have to convert the `10px`.
+        -   By default the `font-size` is `16px`, so we just need to divide `10px/16px = 0.625` or `62.5%`
 
-    ```SCSS
-      html {
-          box-sizing: border-box;
-          font-size: 62.5%;
-      }
-    ```
+        ```SCSS
+          html {
+              box-sizing: border-box;
+              font-size: 62.5%;
+          }
+        ```
 
+<!-- // ~~~> @supports -->
 <h3 id='supports'>@supports - Media Query</h3>
 
 [Go Back to Summary](#summary)
@@ -199,6 +201,7 @@
       }
     ```
 
+<!-- // ~~~> Converting Pixel to REM -->
 <h3 id='convertingpxtorem'>Converting Pixel to REM</h3>
 
 [Go Back to Summary](#summary)
@@ -215,6 +218,7 @@
 <!-- // ~~> STYLING -->
 <h2 id='styling'>Styling</h2>
 
+<!-- // ~~~> Background Image -->
 <h3 id='addingbgimage'>Background Image</h3>
 
 [Go Back to Summary](#summary)
@@ -228,19 +232,19 @@
 -   `background-size: cover;` tries to fit the image inside the box to use the whole available width. If we change the **viewport** the image will be resized until the height hits e available height of the element
 -   `background-position: top;` ensures that the top of the image is always visible, and the bottom is cropped if bigger the than the available space
 
-```SCSS
-  .header {
-      height: 95vh;
-      background-image: linear-gradient(
-              to right bottom,
-              rgba($color-primary-light, 0.8),
-              rgba($color-primary-dark, 0.8)
-          ),
-          url('../img/hero.jpg');
-      background-size: cover;
-      background-position: top;
-  }
-```
+    ```SCSS
+      .header {
+          height: 95vh;
+          background-image: linear-gradient(
+                  to right bottom,
+                  rgba($color-primary-light, 0.8),
+                  rgba($color-primary-dark, 0.8)
+              ),
+              url('../img/hero.jpg');
+          background-size: cover;
+          background-position: top;
+      }
+    ```
 
 <h4 id='clipathpolygon'>clip-path: polygon()</h4>
 
@@ -248,12 +252,12 @@
 
 -   [clip-path maker - Website](https://bennettfeely.com/clippy/)
 
-```SCSS
-  .header {
-      -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-      clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-  }
-```
+    ```SCSS
+      .header {
+          -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+          clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+      }
+    ```
 
 -   `-webkit-clip-path` to support different browsers
 
@@ -264,12 +268,13 @@
 -   The only problem is all the nested elements will be skewed by **-7 degrees**
 -   One easy and better way to fix this, is to **select all direct child of an element** and skew back **7 degrees**
 
-```SCSS
-  & > * {
-      transform: skewY(7deg);
-  }
-```
+    ```SCSS
+      & > * {
+          transform: skewY(7deg);
+      }
+    ```
 
+<!-- // ~~~> Background Video -->
 <h3 id='backgroundvideo'>Background Video</h3>
 
 [Go Back to Summary](#summary)
@@ -292,46 +297,47 @@
 
 -   First create the a `<section>`/`<div>` tag to display the video as a background
 -   Then create a container for the video
+
     -   Inside this container, we crate our `<video>` tag, **without the src** property
         -   Here we can define other properties like `autoplay`, `mute`, `loop`...
     -   Inside the `<video>` tag, we can define `<source>`
         -   In our case we are defining 2 types of video (just in case the browser doesn't support the video format)
         -   If the browser doesn't support any of the available formats, then it will display the msg `Your browser is not supported!`
 
-```HTML
-  <section class="section-stories">
-      <div class="bg-video">
-          <video class="bg-video__content" autoplay muted loop>
-              <source src="img/video.mp4" type="video/mp4">
-              <source src="img/video.webm" type="video/webm">
-              Your browser is not supported!
-          </video>
-      </div>
-  </section>
-```
+    ```HTML
+      <section class="section-stories">
+          <div class="bg-video">
+              <video class="bg-video__content" autoplay muted loop>
+                  <source src="img/video.mp4" type="video/mp4">
+                  <source src="img/video.webm" type="video/webm">
+                  Your browser is not supported!
+              </video>
+          </div>
+      </section>
+    ```
 
-```SCSS
-  .section-stories {
-      padding: 15rem 0;
-      position: relative;
-  }
-  .bg-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: -1;
-      opacity: 0.15;
-      overflow: hidden;
-
-      &__content {
+    ```SCSS
+      .section-stories {
+          padding: 15rem 0;
+          position: relative;
+      }
+      .bg-video {
+          position: absolute;
+          top: 0;
+          left: 0;
           height: 100%;
           width: 100%;
-          object-fit: cover;
+          z-index: -1;
+          opacity: 0.15;
+          overflow: hidden;
+
+          &__content {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+          }
       }
-  }
-```
+    ```
 
 -   in this case `.bg-video` we give `position: absolute;` in relation to the parent element `.section-stories` (`position: relative`), then we assign the `top` and `left`
     -   then we define to use the max available space (width and height)
@@ -342,6 +348,7 @@
     -   we give 100% of the available space (width and height)
     -   `object-fit: cover;` to use all the available space without losing the aspect ratio
 
+<!-- // ~~~> Advanced linear-gradient() -->
 <h3 id='advancedgradient'>Advanced linear-gradient()</h3>
 
 [Go Back to Summary](#summary)
@@ -352,24 +359,26 @@
 -   then we define the initial color (0%)
 -   the middle color at 50%
 -   the end color will be applied the last color until the end (100%)
+
     -   So if we define 2 colors at the same point, we don't give space enough to create the gradient
 
-```SCSS
-  .book {
-      background-image: linear-gradient(
-              105deg,
-              rgba($color-white, 0.85) 0%,
-              rgba($color-white, 0.85) 50%,
-              transparent 50%
-          ),
-          url('../img/nat-10.jpg');
-      background-size: cover;
-      border-radius: 0.3rem;
-      box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2);
-      height: 50rem;
-  }
-```
+    ```SCSS
+      .book {
+          background-image: linear-gradient(
+                  105deg,
+                  rgba($color-white, 0.85) 0%,
+                  rgba($color-white, 0.85) 50%,
+                  transparent 50%
+              ),
+              url('../img/nat-10.jpg');
+          background-size: cover;
+          border-radius: 0.3rem;
+          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2);
+          height: 50rem;
+      }
+    ```
 
+<!-- // ~~~> Positioning -->
 <h3 id='positioning'>Positioning</h3>
 
 [Go Back to Summary](#summary)
@@ -391,45 +400,46 @@
 -   A fixed element does not leave a gap in the page where it would normally have been located.
 -   **Notice the fixed element in the lower-right corner of the page.**
 
-```SCSS
-  .header {
-      height: 95vh;
-      position: relative;
+    ```SCSS
+      .header {
+          height: 95vh;
+          position: relative;
 
-      &__logo-box {
-          position: absolute;
-          top: 4rem;
-          left: 4rem;
+          &__logo-box {
+              position: absolute;
+              top: 4rem;
+              left: 4rem;
+          }
+          &__text-box {
+              position: absolute;
+              top: 40%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+          }
       }
-      &__text-box {
-          position: absolute;
-          top: 40%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-      }
-  }
-```
+    ```
 
 <h4 id='centeringelement'>Centering Element - Absolute Position</h4>
 
 -   To center an element in the middle of the screen, one option is to use the **absolute** position
 
-```SCSS
-  .header {
-      height: 95vh;
-      position: relative;
+    ```SCSS
+      .header {
+          height: 95vh;
+          position: relative;
 
-      &__text-box {
-          position: absolute;
-          top: 40%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
+          &__text-box {
+              position: absolute;
+              top: 40%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+          }
       }
-  }
-```
+    ```
 
+<!-- // ~~~> Span Element -->
 <h3 id='spanelement'>Span Element</h3>
 
 [Go Back to Summary](#summary)
@@ -439,58 +449,60 @@
 -   We then can define a `.text-box` to set the position as **absolute** and the parent element (`header`) as **relative**
 
 -   with that set, we can define the `top` and `left` position
+
     -   That's now enough to centralize the `.text-box`, we need to a `transform`
     -   `transform: translate(-50%, -50%)` to shift the component position
 
-```SCSS
-  .header {
-      height: 95vh;
-      background-image: linear-gradient(
-              to right bottom,
-              rgba(126, 213, 111, 0.8),
-              rgba(40, 180, 131, 0.8)
-          ),
-          url('../img/hero.jpg');
-      background-size: cover;
-      background-position: top;
-      clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-      position: relative;
+    ```SCSS
+      .header {
+          height: 95vh;
+          background-image: linear-gradient(
+                  to right bottom,
+                  rgba(126, 213, 111, 0.8),
+                  rgba(40, 180, 131, 0.8)
+              ),
+              url('../img/hero.jpg');
+          background-size: cover;
+          background-position: top;
+          clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+          position: relative;
 
-      &__text-box {
-          position: absolute;
-          top: 40%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-          &__heading-primary {
-              color: white;
-              text-transform: uppercase;
-              margin-bottom: 60px;
+          &__text-box {
+              position: absolute;
+              top: 40%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+              &__heading-primary {
+                  color: white;
+                  text-transform: uppercase;
+                  margin-bottom: 60px;
 
-              backface-visibility: hidden;
-              &__main {
-                  display: block;
-                  font-size: 60px;
-                  font-weight: 400;
-                  letter-spacing: 35px;
+                  backface-visibility: hidden;
+                  &__main {
+                      display: block;
+                      font-size: 60px;
+                      font-weight: 400;
+                      letter-spacing: 35px;
 
-                  animation-name: moveInLeft;
-                  animation-duration: 1s;
-                  animation-timing-function: ease-in-out;
-              }
-              &__sub {
-                  display: block;
-                  font-size: 20px;
-                  font-weight: 700;
-                  letter-spacing: 17.4px;
+                      animation-name: moveInLeft;
+                      animation-duration: 1s;
+                      animation-timing-function: ease-in-out;
+                  }
+                  &__sub {
+                      display: block;
+                      font-size: 20px;
+                      font-weight: 700;
+                      letter-spacing: 17.4px;
 
-                  animation: moveInRight 1s ease-in-out;
+                      animation: moveInRight 1s ease-in-out;
+                  }
               }
           }
       }
-  }
-```
+    ```
 
+<!-- // ~~~> Column Property -->
 <h3 id='columnproperty'>Column Property</h3>
 
 [Go Back to Summary](#summary)
@@ -524,6 +536,7 @@
 -   To `hyphens` make it work, we need to define the language of the page, inside of the `html` tag
     -   `<html lang="en">`
 
+<!-- // ~~~> -webkit-background-clip -->
 <h3 id='webkitbackgroundclip'>-webkit-background-clip - Background Text Styling</h3>
 
 [Go Back to Summary](#summary)
@@ -533,133 +546,137 @@
 
 -   Why would we do something like that? Well we can define the background to `background-image: linear-gradient();` then our text would be with gradient colors
 
-```SCSS
-  .heading-secondary {
-      font-size: 3.5rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      display: inline-block;
-      background-image: linear-gradient(
-          $color-primary-light,
-          $color-primary-dark
-      );
-      -webkit-background-clip: text;
-      color: transparent;
-  }
-```
+    ```SCSS
+      .heading-secondary {
+          font-size: 3.5rem;
+          text-transform: uppercase;
+          font-weight: 700;
+          display: inline-block;
+          background-image: linear-gradient(
+              $color-primary-light,
+              $color-primary-dark
+          );
+          -webkit-background-clip: text;
+          color: transparent;
+      }
+    ```
 
+<!-- // ~~~> Outline vs Border -->
 <h3 id='outlinevsborder'>Outline vs Border</h3>
 
 [Go Back to Summary](#summary)
 
 -   `outline` is similar to `border`, we can active the same result with
 
-```SCSS
-  div {
-    outline: 1.5rem solid red;
-  }
-```
+    ```SCSS
+      div {
+        outline: 1.5rem solid red;
+      }
+    ```
 
-```SCSS
-  div {
-    border: 1.5rem solid red;
-  }
-```
+    ```SCSS
+      div {
+        border: 1.5rem solid red;
+      }
+    ```
 
 -   The difference really shines when we need to add an offset for the border
 
-```SCSS
-  &__photo {
-      width: 55%;
-      box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
-      border-radius: 0.2rem;
-      position: absolute;
-      z-index: 10;
-      outline-offset: 2rem;
-      transition: all 0.2s;
+    ```SCSS
+      &__photo {
+          width: 55%;
+          box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
+          border-radius: 0.2rem;
+          position: absolute;
+          z-index: 10;
+          outline-offset: 2rem;
+          transition: all 0.2s;
 
-      &:hover {
-          transform: scale(1.05) translateY(-0.5rem);
-          box-shadow: 0 2rem 4rem rgba($color-black, 0.5);
-          z-index: 20;
-          outline: 1.5rem solid $color-primary;
+          &:hover {
+              transform: scale(1.05) translateY(-0.5rem);
+              box-shadow: 0 2rem 4rem rgba($color-black, 0.5);
+              z-index: 20;
+              outline: 1.5rem solid $color-primary;
+          }
       }
-  }
-```
+    ```
 
+<!-- // ~~~> Figure Element -->
 <h3 id='figureelement'>Figure Element</h3>
 
 [Go Back to Summary](#summary)
 
 -   The HTML `<figure>` **(Figure With Optional Caption) element** represents self-contained content, potentially with an optional caption, which is specified using the (`<figcaption>`) element. The figure, its caption, and its contents are referenced as a single unit.
 
-```HTML
-  <figure>
-      <img src="/media/examples/elephant-660-480.jpg"
-          alt="Elephant at sunset">
-      <figcaption>An elephant at sunset</figcaption>
-  </figure>
-```
+    ```HTML
+      <figure>
+          <img src="/media/examples/elephant-660-480.jpg"
+              alt="Elephant at sunset">
+          <figcaption>An elephant at sunset</figcaption>
+      </figure>
+    ```
 
 -   To work with `<figure>` we have to follow the define the following boilerplate
 
 -   `width` and `height`
 -   `float` position, and float only works with defined width and height
 -   `shape-outside`, could be a **polygon**, **circle**...
+
     -   **internet explorer doesn't support this property**
     -   the `shape-outside` only defines the shape around the element
     -   if we want to look like a circle we need to user the `clip-path` property
 
-```HTML
-  <div class="story">
-      <figure class="story__shape">
+    ```HTML
+      <div class="story">
+          <figure class="story__shape">
 
-      </figure>
-      <div class="story__text">
-          <h3 class="heading-tertiary u-margin-bottom-small">
-              I had the best weekend with my family
-          </h3>
-          <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nulla eos corrupti
-              exercitationem quos! Non corrupti, culpa deleniti quisquam commodi quam minima fugit nihil
-              velit ab doloremque recusandae natus magni! Lorem ipsum dolor sit, amet consectetur
-              adipisicing elit. Expedita quo dolor et molestias, qui illo temporibus perferendis iure
-              eveniet aperiam similique nobis fugiat corrupti ab deleniti, laborum reiciendis blanditiis
-              at.
-          </p>
+          </figure>
+          <div class="story__text">
+              <h3 class="heading-tertiary u-margin-bottom-small">
+                  I had the best weekend with my family
+              </h3>
+              <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nulla eos corrupti
+                  exercitationem quos! Non corrupti, culpa deleniti quisquam commodi quam minima fugit nihil
+                  velit ab doloremque recusandae natus magni! Lorem ipsum dolor sit, amet consectetur
+                  adipisicing elit. Expedita quo dolor et molestias, qui illo temporibus perferendis iure
+                  eveniet aperiam similique nobis fugiat corrupti ab deleniti, laborum reiciendis blanditiis
+                  at.
+              </p>
+          </div>
       </div>
-  </div>
-```
+    ```
 
-```SCSS
-  .story {
-      width: 75%;
-      margin: 0 auto;
-      box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
-      background-color: $color-white;
-      border-radius: 0.3rem;
-      padding: 6rem;
-      padding-left: 9rem;
-      font-size: $default-font-size;
+    ```SCSS
+      .story {
+          width: 75%;
+          margin: 0 auto;
+          box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+          background-color: $color-white;
+          border-radius: 0.3rem;
+          padding: 6rem;
+          padding-left: 9rem;
+          font-size: $default-font-size;
 
-      &__shape {
-          width: 15rem;
-          height: 15rem;
-          float: left;
-          background-color: red;
-          -webkit-shape-outside: circle(50% at 50% 50%);
-          shape-outside: circle(50% at 50% 50%);
-          -webkit-clip-path: circle(50% at 50% 50%);
-          clip-path: circle(50% at 50% 50%);
+          &__shape {
+              width: 15rem;
+              height: 15rem;
+              float: left;
+              background-color: red;
+              -webkit-shape-outside: circle(50% at 50% 50%);
+              shape-outside: circle(50% at 50% 50%);
+              -webkit-clip-path: circle(50% at 50% 50%);
+              clip-path: circle(50% at 50% 50%);
+          }
       }
-  }
-```
+    ```
 
 <h4 id='float'>Float</h4>
 
 -   When we are working with `float` property, the best way to center the object is using `transform`
 -   if we try to user `margin` or `padding` this could mess up with our styling
 
+<!-- // ~~~> Filters -->
 <h3 id='filter'>Filters</h3>
 
 [Go Back to Summary](#summary)
@@ -667,23 +684,24 @@
 -   The **filter** CSS property applies graphical effects like blur or color shift to an element. Filters are commonly used to adjust the rendering of images, backgrounds, and borders.
 -   Included in the CSS standard are several functions that achieve predefined effects. You can also reference an SVG filter with a URL to an SVG filter element.
 
-```SCSS
-  /* <filter-function> values */
-  filter: blur(5px);
-  filter: brightness(0.4);
-  filter: contrast(200%);
-  filter: drop-shadow(16px 16px 20px blue);
-  filter: grayscale(50%);
-  filter: hue-rotate(90deg);
-  filter: invert(75%);
-  filter: opacity(25%);
-  filter: saturate(30%);
-  filter: sepia(60%);
+    ```SCSS
+      /* <filter-function> values */
+      filter: blur(5px);
+      filter: brightness(0.4);
+      filter: contrast(200%);
+      filter: drop-shadow(16px 16px 20px blue);
+      filter: grayscale(50%);
+      filter: hue-rotate(90deg);
+      filter: invert(75%);
+      filter: opacity(25%);
+      filter: saturate(30%);
+      filter: sepia(60%);
 
-  /* Multiple filters */
-  filter: contrast(175%) brightness(3%);
-```
+      /* Multiple filters */
+      filter: contrast(175%) brightness(3%);
+    ```
 
+<!-- // ~~~> Selector/Combinator -->
 <h3 id='csscombinator'>Selector/Combinator</h3>
 
 [Go Back to Summary](#summary)
@@ -698,78 +716,7 @@
 
 -   We can use theses combinations to style the adjacent element
 
-```SCSS
-  &__label {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-left: 2rem;
-      margin-top: 0.7rem;
-      display: block;
-      transition: all 0.3s;
-  }
-  &__input:placeholder-shown + &__label {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-4rem);
-  }
-```
-
-```HTML
-  <form action="#" class="form">
-      <div class="u-margin-bottom-medium">
-          <h2 class="heading-secondary">
-              Start booking now
-          </h2>
-      </div>
-      <div class="form__group">
-          <input type="text" class="form__input" placeholder="Full name" required
-              autocomplete="off" id="name">
-          <label for="name" class="form__label">Full name</label>
-      </div>
-      <div class="form__group">
-          <input type="email" class="form__input" placeholder="Email address" required
-              autocomplete="off" id="email">
-          <label for="email" class="form__label">Email address</label>
-      </div>
-  </form>
-```
-
-```SCSS
-  .form {
-      &__group:not(:last-child) {
-          margin-bottom: 2rem;
-      }
-      &__input {
-          font-size: 1.5rem;
-          font-family: inherit;
-          color: inherit;
-          padding: 1.5rem 2rem;
-          border-radius: 0.2rem;
-          background-color: rgba($color-white, 0.5);
-          border: none;
-          border-bottom: 0.3rem solid transparent;
-          width: 40%;
-          display: block;
-          transition: all 0.3s;
-
-          &:focus {
-              outline: none;
-              box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
-              border-bottom: 0.3rem solid $color-primary;
-          }
-          &:focus:invalid {
-              border-bottom: 0.3rem solid $color-secondary-dark;
-          }
-          &::-webkit-input-placeholder {
-              color: $color-grey-dark-2;
-          }
-          &:valid {
-              border-bottom: 0.3rem solid $color-primary;
-          }
-          &:invalid {
-              border-bottom: 0.3rem solid $color-secondary-dark;
-          }
-      }
+    ```SCSS
       &__label {
           font-size: 1.2rem;
           font-weight: 700;
@@ -783,121 +730,192 @@
           visibility: hidden;
           transform: translateY(-4rem);
       }
-  }
-```
+    ```
+
+    ```HTML
+      <form action="#" class="form">
+          <div class="u-margin-bottom-medium">
+              <h2 class="heading-secondary">
+                  Start booking now
+              </h2>
+          </div>
+          <div class="form__group">
+              <input type="text" class="form__input" placeholder="Full name" required
+                  autocomplete="off" id="name">
+              <label for="name" class="form__label">Full name</label>
+          </div>
+          <div class="form__group">
+              <input type="email" class="form__input" placeholder="Email address" required
+                  autocomplete="off" id="email">
+              <label for="email" class="form__label">Email address</label>
+          </div>
+      </form>
+    ```
+
+    ```SCSS
+      .form {
+          &__group:not(:last-child) {
+              margin-bottom: 2rem;
+          }
+          &__input {
+              font-size: 1.5rem;
+              font-family: inherit;
+              color: inherit;
+              padding: 1.5rem 2rem;
+              border-radius: 0.2rem;
+              background-color: rgba($color-white, 0.5);
+              border: none;
+              border-bottom: 0.3rem solid transparent;
+              width: 40%;
+              display: block;
+              transition: all 0.3s;
+
+              &:focus {
+                  outline: none;
+                  box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+                  border-bottom: 0.3rem solid $color-primary;
+              }
+              &:focus:invalid {
+                  border-bottom: 0.3rem solid $color-secondary-dark;
+              }
+              &::-webkit-input-placeholder {
+                  color: $color-grey-dark-2;
+              }
+              &:valid {
+                  border-bottom: 0.3rem solid $color-primary;
+              }
+              &:invalid {
+                  border-bottom: 0.3rem solid $color-secondary-dark;
+              }
+          }
+          &__label {
+              font-size: 1.2rem;
+              font-weight: 700;
+              margin-left: 2rem;
+              margin-top: 0.7rem;
+              display: block;
+              transition: all 0.3s;
+          }
+          &__input:placeholder-shown + &__label {
+              opacity: 0;
+              visibility: hidden;
+              transform: translateY(-4rem);
+          }
+      }
+    ```
 
 -   Creating a radio button using **span** and **input**
 
-```HTML
-  <div class="form__group">
-      <div class="form__radio-group">
-          <input type="radio" class="form__radio-input" id="small" name="size">
-          <label for="small" class="form__radio-label">
-              <span class="form__radio-button"></span>
-              Small tour group
-          </label>
+    ```HTML
+      <div class="form__group">
+          <div class="form__radio-group">
+              <input type="radio" class="form__radio-input" id="small" name="size">
+              <label for="small" class="form__radio-label">
+                  <span class="form__radio-button"></span>
+                  Small tour group
+              </label>
+          </div>
+          <div class="form__radio-group">
+              <input type="radio" class="form__radio-input" id="large" name="size">
+              <label for="large" class="form__radio-label">
+                  <span class="form__radio-button"></span>
+                  Large tour group
+              </label>
+          </div>
       </div>
-      <div class="form__radio-group">
-          <input type="radio" class="form__radio-input" id="large" name="size">
-          <label for="large" class="form__radio-label">
-              <span class="form__radio-button"></span>
-              Large tour group
-          </label>
-      </div>
-  </div>
-```
+    ```
 
-```SCSS
-  .form {
-      &__radio-group {
-          width: 20%;
-          display: inline-block;
-      }
-      &__radio-label {
-          font-size: $default-font-size;
-          cursor: pointer;
-          position: relative;
-          padding-left: 5rem;
-      }
-      &__radio-button {
-          height: 3rem;
-          width: 3rem;
-          border: 0.5rem solid $color-primary;
-          border-radius: 50%;
-          display: inline-block;
-          position: absolute;
-          top: -0.4rem;
-          left: 0;
-
-          &::after {
-              height: 1.3rem;
-              width: 1.3rem;
-              content: '';
+    ```SCSS
+      .form {
+          &__radio-group {
+              width: 20%;
               display: inline-block;
+          }
+          &__radio-label {
+              font-size: $default-font-size;
+              cursor: pointer;
+              position: relative;
+              padding-left: 5rem;
+          }
+          &__radio-button {
+              height: 3rem;
+              width: 3rem;
+              border: 0.5rem solid $color-primary;
               border-radius: 50%;
+              display: inline-block;
               position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              background-color: $color-primary;
-              opacity: 0;
-              transition: opacity 0.2s;
+              top: -0.4rem;
+              left: 0;
+
+              &::after {
+                  height: 1.3rem;
+                  width: 1.3rem;
+                  content: '';
+                  display: inline-block;
+                  border-radius: 50%;
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  background-color: $color-primary;
+                  opacity: 0;
+                  transition: opacity 0.2s;
+              }
+          }
+          &__radio-input {
+              display: none;
+          }
+          &__radio-input:checked ~ &__radio-label &__radio-button::after {
+              opacity: 1;
           }
       }
-      &__radio-input {
-          display: none;
-      }
-      &__radio-input:checked ~ &__radio-label &__radio-button::after {
-          opacity: 1;
-      }
-  }
-```
+    ```
 
 <h4 id='descendantselector'>Descendent Selector</h4>
 
 -   The descendant selector matches **all elements** that are **descendants** of a specified element.
 
-```SCSS
-  .descendant p {
-    background-color: yellow;
-  }
-  // Will match all <p> inside the <div>
-```
+    ```SCSS
+      .descendant p {
+        background-color: yellow;
+      }
+      // Will match all <p> inside the <div>
+    ```
 
-```HTML
-  <div class="descendant">
-      <p> This text is yellow</p>
-      <div class="random-class-1">
+    ```HTML
+      <div class="descendant">
           <p> This text is yellow</p>
-          <div class="random-class-2">
+          <div class="random-class-1">
               <p> This text is yellow</p>
+              <div class="random-class-2">
+                  <p> This text is yellow</p>
+              </div>
           </div>
       </div>
-  </div>
-```
+    ```
 
 <h4 id='childselector'>> Direct Child Selector</h4>
 
 -   The child selector selects all elements that are the **direct child** of a specified element.
 
-```CSS
-  .direct-child > p {
-    background-color: yellow;
-  }
-```
+    ```CSS
+      .direct-child > p {
+        background-color: yellow;
+      }
+    ```
 
-```HTML
-  <div class="direct-child">
-      <p> This text is yellow</p>
-      <div class="random-class-1">
-          <p> This text is NOT yellow</p>
-          <div class="random-class-2">
+    ```HTML
+      <div class="direct-child">
+          <p> This text is yellow</p>
+          <div class="random-class-1">
               <p> This text is NOT yellow</p>
+              <div class="random-class-2">
+                  <p> This text is NOT yellow</p>
+              </div>
           </div>
+          <p> This text is yellow</p>
       </div>
-      <p> This text is yellow</p>
-  </div>
-```
+    ```
 
 <h4 id='adjacentsiblingselector'>+ Adjacent Sibling Selector</h4>
 
@@ -906,91 +924,91 @@
 
 -   It looks for sibiling that comes before, that's why the first box is white, because it doesn't have a sibling before with the class `.box`
 
-```CSS
-  .adjacent-sibling {
-      display: flex;
-  }
+    ```CSS
+      .adjacent-sibling {
+          display: flex;
+      }
 
-  .box {
-      height: 60px;
-      width: 60px;
-      margin: 10px;
-      border: 2px solid black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
+      .box {
+          height: 60px;
+          width: 60px;
+          margin: 10px;
+          border: 2px solid black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
 
-  .adjacent-sibling .box + .box {
-      background-color: yellow;
-  }
-```
+      .adjacent-sibling .box + .box {
+          background-color: yellow;
+      }
+    ```
 
-```HTML
-  <div class="adjacent-sibling">
-      <div class="box">White</div>
-      <div class="box">Yellow</div>
-      <div class="box">Yellow</div>
-      <div class="box">Yellow</div>
-  </div>
-```
+    ```HTML
+      <div class="adjacent-sibling">
+          <div class="box">White</div>
+          <div class="box">Yellow</div>
+          <div class="box">Yellow</div>
+          <div class="box">Yellow</div>
+      </div>
+    ```
 
-```HTML
-  <div class="adjacent-sibling">
-      <div class="box">White</div>
-      <div class="box">Yellow</div>
-      <div class="something-else">Something else</div>
-      <div class="box">white</div>
-      <div class="box">Yellow</div>
-  </div>
-```
+    ```HTML
+      <div class="adjacent-sibling">
+          <div class="box">White</div>
+          <div class="box">Yellow</div>
+          <div class="something-else">Something else</div>
+          <div class="box">white</div>
+          <div class="box">Yellow</div>
+      </div>
+    ```
 
 <h4 id='generalsibligselector'>~ General Sibling Selector</h4>
 
 -   The general sibling selector selects all elements that are siblings of a specified element.
 -   It works similar to **adjacent sibling**, It looks for sibiling that comes before, that's why the first box is white, because it doesn't have a sibling before with the class `.box`, but with **general sibling** anything before has to be the selector
 
-```CSS
-  .general-sibling {
-      display: flex;
-  }
+    ```CSS
+      .general-sibling {
+          display: flex;
+      }
 
-  .box {
-      height: 60px;
-      width: 60px;
-      margin: 10px;
-      border: 2px solid black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
+      .box {
+          height: 60px;
+          width: 60px;
+          margin: 10px;
+          border: 2px solid black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
 
-  .general-sibling .box ~ .box {
-      background-color: yellow;
-  }
-```
+      .general-sibling .box ~ .box {
+          background-color: yellow;
+      }
+    ```
 
-```HTML
-  <div class="general-sibling">
-      <div class="box">White</div>
-      <div class="box">Yellow</div>
-      <div class="something-else">Something else</div>
-      <div class="box">Yellow</div>
-      <div class="box">Yellow</div>
-  </div>
-```
+    ```HTML
+      <div class="general-sibling">
+          <div class="box">White</div>
+          <div class="box">Yellow</div>
+          <div class="something-else">Something else</div>
+          <div class="box">Yellow</div>
+          <div class="box">Yellow</div>
+      </div>
+    ```
 
 <h4 id='attributeselector'>[] Attribute Selector</h4>
 
 ```HTML
-<div class="attributes">
-   <a href="https://www.google.com" class="link-one">Google</a>
-   <a href="https://www.google.ca" class="link-two">Google Canada</a>
-   <a href="about.html" class="link-three">About Page</a>
-   <a href="http://rogertakeshita.com" class="link-four" target="_blank">Roger</a>
-   <a href="ebook.pdf" class="link-five">PDF File</a>
-   <a href="#" class="another-link">Another Link</a>
-</div>
+  <div class="attributes">
+    <a href="https://www.google.com" class="link-one">Google</a>
+    <a href="https://www.google.ca" class="link-two">Google Canada</a>
+    <a href="about.html" class="link-three">About Page</a>
+    <a href="http://rogertakeshita.com" class="link-four" target="_blank">Roger</a>
+    <a href="ebook.pdf" class="link-five">PDF File</a>
+    <a href="#" class="another-link">Another Link</a>
+  </div>
 ```
 
 -   **Targeting an Attribute**
@@ -1088,7 +1106,7 @@
         -   `$=` select classes that ends with
     -   `"col-"` the name of the variable
 
--   another cool command is the **negation** (`:not()`)
+-   Another cool command is the **negation** (`:not()`)
 
     ```SCSS
       &:not(:last-child) {
@@ -1215,6 +1233,7 @@
       }
     ```
 
+<!-- // ~~~> Responsive Images -->
 <h3 id='responsiveimages'>Responsive Images</h3>
 
 [Go Back to Summary](#summary)
@@ -1294,6 +1313,7 @@
       }
     ```
 
+<!-- // ~~~> Flexbox -->
 <h3 id='flexbox'>Flexbox</h3>
 
 [Go Back to Summary](#summary)
@@ -1322,6 +1342,7 @@
 <!-- // ~~> ANIMATION -->
 <h2 id='animation'>Animation</h2>
 
+<!-- // ~~~> @keyframes -->
 <h3 id='keyframes'>@keyframes</h3>
 
 [Go Back to Summary](#summary)
@@ -1388,6 +1409,7 @@
     -   Sometimes the **transform** property can gets bugged and the animation doesn't work properly
     -   An easy fix is to define `backface-visibility: hidden;` to the closest parent element
 
+<!-- // ~~~> Transition -->
 <h3 id='transition'>Transition</h3>
 
 [Go Back to Summary](#summary)
@@ -1768,6 +1790,7 @@
       cubic-bezier(x1,y1,x2,y2)
     ```
 
+<!-- // ~~~> Advanced Hover -->
 <h3 id='advancedhover'>Advanced Hover</h3>
 
 [Go Back to Summary](#summary)
@@ -1823,6 +1846,7 @@
     -   then select the `composition__photo`
     -   then with the the `elements that are not hovered` scale down to `95%`
 
+<!-- // ~~~> Rotating -->
 <h3 id='rotating'>Rotating</h3>
 
 [Go Back to Summary](#summary)
@@ -2106,6 +2130,7 @@
       }
     ```
 
+<!-- // ~~~> Target -->
 <h3 id='target'>Target</h3>
 
 [Go Back to Summary](#summary)
@@ -2518,6 +2543,7 @@
       }
     ```
 
+<!-- // ~~~> Calling a Mixin -->
 <h3 id='usingmixin'>Calling a Mixin</h3>
 
 [Go Back to Summary](#summary)
@@ -2622,6 +2648,7 @@
 -   **Partials** are SCSS files that we split across our project
 -   We declare as `_name.scss`
 
+<!-- // ~~~> Immport Partials -->
 <h3 id='sassimportpartial'>Import Partials</h3>
 
 [Go Back to Summary](#summary)
@@ -2632,6 +2659,7 @@
 <!-- // ~> RESPONSIVE WEB DESIGN -->
 <h1 id='responsivedesign'>Responsive Web Design</h1>
 
+<!-- // ~~> Mobile First -->
 <h2 id='mobilefirst'>Mobile First</h2>
 
 [Go Back to Summary](#summary)
@@ -2652,6 +2680,7 @@
       }
     ```
 
+<!-- // ~~> Media Queries Sizes -->
 <h2 id='mediaqueriessizes'>Media Queries Sizes</h2>
 
 [Go Back to Summary](#summary)
@@ -2700,6 +2729,7 @@
           Maximum width at which media query still applies
     ```
 
+<!-- // ~~~> Media Query With SASS -->
 <h2 id='mediaquerysass'>Media Query With SASS</h2>
 
 [Go Back to Summary](#summary)
