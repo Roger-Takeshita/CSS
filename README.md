@@ -35,6 +35,11 @@
             -   [Density Switching](#densityswitching)
             -   [Art Direction](#artdirection)
         -   [Flexbox](#flexbox)
+        -   [Grid](#grid)
+            -   [Basics Grid](#basicsgrid)
+            -   [Grid Start / End](#gridstartend)
+            -   [Naming Grid](#naminggrid)
+            -   [Naming Grid Area](#naminggridarea)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -1338,6 +1343,195 @@
     -   `flex-basis: auto` <length>
         -   Sets the size of an element compared to the size of its container, we can use in **%** or **pixel**
     -   Shorthand for `flex-grow flex-shrink flex-basis`, we can simply use `flex: 0 1 auto`
+
+<!-- // ~~~> Grid -->
+<h3 id='cssgrid'>Grid</h3>
+
+[Go Back to Summary](#summary)
+
+<h4 id='basicsgrid'>Basics</h4>
+
+```SCSS
+    display: grid;
+    // grid-template-rows: 150px 150px;
+    // grid-template-rows: repeat(1, 150px) 150px;
+    grid-template-rows: repeat(2, 150px);
+    // grid-template-columns: 150px 150px 150px;
+    // grid-template-columns: repeat(2, 150px) 150px;
+    // grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+
+    // grid-row-gap: 30px;
+    // grid-column-gap: 30px;
+    grid-gap: 30px;
+```
+
+-   **fraction unit**
+
+    -   `1fr` uccupies 100% of the available space
+    -   we could use only using fractions to devide a div
+
+-   **percentage**
+
+    -   With **%**, css doesn't care about the available space, css only considers the total space. If we use:
+
+    ```CSS
+      .container {
+          background: #eee;
+          width: 1000px;
+          margin: 38px auto;
+
+          display: grid;
+          grid-template-rows: repeat(2, 150px);
+          grid-template-columns: 50% 1fr 1fr;
+          grid-gap: 60px;
+      }
+    ```
+
+    -   in this case the first gird cell will have `50%` of the `1000px`, so `500px` (not including the gap), and the rest will be `1fr` each + the `gap`, so if we increase the gap, the grid cell that is using `fr` will have less space and the grid cell that is using `%` will remain the same
+
+<h4 id='gridstartend'>Grid Start / End</h4>
+
+-   We use `grid-row-start`, `grid-row-end`, `grid-column-start` and `grid-column-end` to positioning a specific grid cell in the grid
+-   So we could move the first item `1: Orange` to position 2x2 in a matrix 2x3
+
+    ```CSS
+      .item--1 {
+          background-color: orangered;
+          grid-row-start: 2;
+          grid-row-end: 3;
+          grid-column-start: 2;
+          grid-column-end: 3;
+      }
+    ```
+
+    -   A shorthand:
+
+    ```CSS
+      .item--1 {
+          background-color: orangered;
+          grid-row: 2 / 3;
+          grid-column: 2 / 3;
+      }
+    ```
+
+    -   We could also use another shorthand `grid-area`, but it's a little counfusing
+    -   `grid-area: row-start / column-start / row-end / column-end`
+    -   `grid-area: 2 / 2 / 3 / 3;`
+
+<h4 id='gridspace'>Grid Space</h4>
+
+-   We can have multiple grid cells on the same space.
+
+    -   in this case one cell will be over another cell, to display it, we can use `z-index`
+
+    ```CSS
+      .item--5 {
+          background-color: royalblue;
+          grid-row: 1 / 3;
+          grid-column: 3 / 4;
+      }
+    ```
+
+-   We can also specify using `span` to grow the grid cell, instead having to define or count the **number of columns/rows that you want to expand**
+
+    ```CSS
+      .item--2 {
+          background-color: yellowgreen;
+          grid-column: 1 / span 3;
+      }
+    ```
+
+-   If we don't know how many columns we have, but we want to **expand until the end**, we can use `-1`
+
+    ```CSS
+      .item--2 {
+          background-color: yellowgreen;
+          grid-column: 1 / -1;
+      }
+    ```
+
+<h4 id='naminggrid'>Naming Grid</h4>
+
+-   we can name the row/column using `[]` before the value, then we just need to pass the name to use the property.
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 30px auto;
+          display: grid;
+          grid-template-rows: [header-start] 100px [header-end box-start] 200px [box-end main-start] 400px [main-end footer-start] 100px [footer-end];
+          grid-template-columns: repeat(3, [column-start] 1fr [column-end]) 200px [grid-end];
+          grid-gap: 30px;
+      }
+
+      .header {
+          /* grid-row: 1 / 2;
+          grid-column: 1 / -1; */
+          grid-row: header-start / header-start;
+          grid-column: column-start 1 / grid-end;
+      }
+
+      .main-content {
+          /* grid-row: 3 / 4;
+          grid-column: 1 / -2; */
+          grid-row: main-start / main-end;
+          grid-column: column-start 1 / column-end 3;
+      }
+
+      .sidebar {
+          /* grid-row: 2 / 4;
+          grid-column: 4 / 5; */
+          grid-row: box-start / main-end;
+          grid-column: column-end 3 / grid-end;
+      }
+
+      .footer {
+          /* grid-row: 4 / 5;
+          grid-column: 1 / -1; */
+          grid-row: footer-start / footer-end;
+          grid-column: column-start 1 / grid-end;
+      }
+    ```
+
+<h4 id='naminggridarea'>Naming Grid Area</h4>
+
+-   Another option to name a grid, is to name the **area** using `grid-template-areas`
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 30px auto;
+          display: grid;
+          grid-template-rows: 100px 200px 400px 100px;
+          grid-template-columns: repeat(3, 1fr) 200px;
+          grid-gap: 30px;
+
+          grid-template-areas:
+              'header header header header'
+              'box box box sidebar'
+              'main main main sidebar'
+              'footer footer footer footer';
+      }
+
+      .header {
+          grid-area: header;
+      }
+
+      .main-content {
+          grid-area: main;
+      }
+
+      .sidebar {
+          grid-area: sidebar;
+      }
+
+      .footer {
+          grid-area: footer;
+      }
+    ```
+
+    -   if we don't want to place an empty cell, we can do so using `.`. **ATTENTION** make sure you have defined all the `grid-area` otherwise this not might work
 
 <!-- // ~~> ANIMATION -->
 <h2 id='animation'>Animation</h2>
