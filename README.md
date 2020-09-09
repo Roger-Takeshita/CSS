@@ -40,6 +40,13 @@
             -   [Grid Start / End](#gridstartend)
             -   [Naming Grid](#naminggrid)
             -   [Naming Grid Area](#naminggridarea)
+            -   [Implicit vs Explicit](#implicitvsexplicit)
+            -   [Align Grid Items](#aligngriditems)
+            -   [Fixing Grid Holes](#fixinggridholes)
+            -   [max-content](#maxcontent)
+            -   [min-content](#mincontent)
+            -   [minmax()](#minmaxgrid)
+            -   [Auto-Fit and Auto-Fill](#autofitautofill)
     -   [Animation](#animation)
         -   [@keyframes](#keyframes)
         -   [Transition](#transition)
@@ -1532,6 +1539,209 @@
     ```
 
     -   if we don't want to place an empty cell, we can do so using `.`. **ATTENTION** make sure you have defined all the `grid-area` otherwise this not might work
+
+<h4 id='implicitvsexplicit'>Implicit vs Explicit</h4>
+
+-   `Explicit` means that we explicit specified the size of the grid
+-   `Implicit` mean that we have more grids than we have specified
+
+-   We can set some default values
+
+    -   `grid-auto-rows`, defines the height of each row if not specified
+    -   `grid-auto-columns`, defines the width of each column if not specified
+    -   `grid-auto-flow: row | column;`, just like `display: flex;` the default value is `row`, this means that all the remaining (implicit) grids will grow as rows.
+        -   This will change the display orientation too
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 38px auto;
+          background-color: #ddd;
+
+          display: grid;
+          grid-template-rows: repeat(2, 150px);
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 30px;
+
+          grid-auto-rows: 80px;
+          grid-auto-columns: 0.5fr;
+          grid-auto-flow: column;
+      }
+
+      .item {
+          padding: 20px;
+          color: white;
+          font-family: sans-serif;
+          font-size: 30px;
+          background-color: orangered;
+      }
+    ```
+
+<h4 id='aligngriditems'>Align Grid Items</h4>
+
+-   To align the items inside of a grid area, we can use `align-items` to align vertically and `justify-items` to align horizontally (we don't have justfy-items to **flexbox**).
+
+    -   Just like in **flexbox** the default valeu of **align-items** is `stretch` and one we override this command, the item will shrink to occupies only the space that it needs
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 38px auto;
+          background-color: #ddd;
+
+          display: grid;
+          grid-gap: 30px;
+
+          grid-auto-rows: 80px;
+          grid-auto-columns: 0.5fr;
+          grid-auto-flow: row;
+
+          /* Align grid tracks to grid container */
+          height: 1000px;
+          grid-template-rows: repeat(2, 100px);
+          grid-template-columns: repeat(2, 200px);
+          justify-content: center;
+          align-content: center;
+      }
+
+      .item {
+          padding: 20px;
+          color: white;
+          font-family: sans-serif;
+          font-size: 30px;
+          background-color: orangered;
+      }
+
+      .item--4 {
+          grid-row: 2 / span 3;
+          align-self: start;
+          justify-self: start;
+      }
+
+      .item--7 {
+          grid-column: 1 / -1;
+          background-color: orchid;
+      }
+    ```
+
+<h4 id='fixinggridholes'>Fixing Grid Holes</h4>
+
+-   Sometimes we have some holes in our grid area, because the automatically placement cannot tries to keep the sequence of our code, instead it follows the sequence that we create on our css, and that might cause some holes in our grid
+-   To fix that we can add the **dense** to our `grid-auto-flow`
+
+<h4 id='maxcontent'>max-content</h4>
+
+-   With `max-content` it will grow the size of the grid cell to accomodate the inner content
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 38px auto;
+          background-color: #ddd;
+
+          display: grid;
+          grid-template-rows: repeat(2, 150px);
+          grid-template-columns: max-content 1fr 1fr max-content;
+      }
+
+      .item {
+          padding: 20px;
+          color: white;
+          font-family: sans-serif;
+          font-size: 30px;
+          background-color: orangered;
+      }
+
+      .item--1 {
+          background-color: orangered;
+      }
+
+      .item--2 {
+          background-color: yellowgreen;
+      }
+
+      .item--3 {
+          background-color: blueviolet;
+      }
+
+      .item--4 {
+          background-color: palevioletred;
+      }
+
+      .item--5 {
+          background-color: royalblue;
+      }
+
+      .item--6 {
+          background-color: goldenrod;
+      }
+
+      .item--7 {
+          background-color: crimson;
+      }
+
+      .item--8 {
+          background-color: darkslategray;
+      }
+    ```
+
+<h4 id='mincontent'>min-content</h4>
+
+-   With `min-content` it will grow until the min size that the grid needs to grow. In other words, it will grow up to the biggest single word width.
+
+<h4 id='minmaxgrid'>minmax()</h4>
+
+-   The `minmax()` uses the minimum space that the grid needs and uses the max-content to grow as much it needs to fit the content
+    -   `grid-template-rows: repeat(2, minmax(150px, min-content));`
+    -   `grid-template-columns: minmax(200px, 300px) repeat(3, 1fr);`
+
+<h4 id='autofitautofill'>Auto-Fit and Auto-Fill</h4>
+
+-   **Auto-Fill**
+
+    -   `auto-fill` will automatically create the grid to fill the all the remaining space. In this case we have a width of `1000px` and we want to create a grid that has `100px`, so it will fill with `10 columns`
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 38px auto;
+          background-color: #ddd;
+
+          display: grid;
+          grid-template-rows: repeat(2, minmax(150px, min-content));
+          grid-template-columns: repeat(auto-fill, 100px);
+      }
+    ```
+
+-   **Auto-Fit**
+
+    -   `auto-fit` just like `auto-fill`, it will create `10 columns` but with the difference that it will colapse the unused grids leaving with an empty space
+
+    ```CSS
+      .container {
+          width: 1000px;
+          margin: 38px auto;
+          background-color: #ddd;
+
+          display: grid;
+          grid-template-rows: repeat(2, minmax(150px, min-content));
+          grid-template-columns: repeat(auto-fit, 100px);
+      }
+    ```
+
+    -   One option woul be to use `auto-fit` with `min-max(200px, 1fr)`, and a width realtive to the viewport(in **%**). Just like `diplay: flex;`, `flex-wrap: wrap;` if we change the viewport the content (the grid) will adapt to use the min `200px` or max of `1fr`. If the content doesn't fit, it will move the item to the next line
+
+    ```CSS
+      .container {
+          width: 90%;
+          margin: 38px auto;
+          background-color: #ddd;
+
+          display: grid;
+          grid-template-rows: repeat(2, minmax(150px, min-content));
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    ```
 
 <!-- // ~~> ANIMATION -->
 <h2 id='animation'>Animation</h2>

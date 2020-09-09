@@ -1,0 +1,64 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 1000px;
+    margin: 38px auto;
+    background-color: #ddd;
+
+    display: grid;
+    width: 90%;
+    grid-template-rows: repeat(2, minmax(150px, min-content));
+    /* grid-template-columns: repeat(auto-fill, 100px); */
+    /* grid-template-columns: repeat(auto-fit, 100px); */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.item {
+    padding: 20px;
+    color: white;
+    font-family: sans-serif;
+    font-size: 30px;
+    background-color: orangered;
+}
+
+.item--1 {
+    background-color: orangered;
+}
+
+.item--2 {
+    background-color: yellowgreen;
+}
+
+.item--3 {
+    background-color: blueviolet;
+}
+
+.item--4 {
+    background-color: palevioletred;
+}
+
+.item--5 {
+    background-color: royalblue;
+}
+
+.item--6 {
+    background-color: goldenrod;
+}
+
+.item--7 {
+    background-color: crimson;
+}
+
+.item--8 {
+    background-color: darkslategray;
+}
