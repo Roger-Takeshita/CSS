@@ -1450,6 +1450,7 @@
     ```
 
 -   If we don't know how many columns we have, but we want to **expand until the end**, we can use `-1`
+-   **ATTENTION** `-1` only works with **explicit grids**
 
     ```CSS
       .item--2 {
